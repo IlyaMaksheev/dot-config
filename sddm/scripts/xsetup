@@ -1,0 +1,63 @@
+#!/bin/sh
+# SDDM greeter monitor layout.
+#
+# Important: SDDM uses its own Xorg greeter. Its RandR output names can differ
+# from niri's Wayland/DRM output names. On this machine, SDDM/Xorg reports:
+#   DP-0: physical left monitor
+#   DP-2: physical right monitor
+#
+# Desired physical layout for the greeter:
+#   DP-0: physical left monitor,  2560x1440 at x=0 y=0
+#   DP-2: physical right monitor, 2560x1440 at x=2560 y=0, primary
+#
+# This script is run by SDDM before showing the greeter when DisplayServer=x11.
+
+log() {
+  logger -t sddm-gruvbox-xsetup "$*"
+}
+
+# Give the X server a moment to expose outputs after startup. Usually not needed,
+# but harmless and avoids occasional races on some GPUs/monitors.
+sleep 0.2
+
+if ! command -v xrandr >/dev/null 2>&1; then
+  log "xrandr not found"
+  exit 0
+fi
+
+log "before: $(xrandr --listmonitors 2>&1 | tr '\n' '; ')"
+
+if xrandr --query | grep -q '^DP-0 connected' && xrandr --query | grep -q '^DP-2 connected'; then
+  xrandr \
+    --output DP-0 --mode 2560x1440 --rate 164.85 --pos 0x0 --rotate normal \
+    --output DP-2 --mode 2560x1440 --rate 164.85 --pos 2560x0 --rotate normal --primary \
+    && log "applied layout: DP-0=2560x1440+0+0, DP-2=2560x1440+2560+0 primary" \
+    || log "failed to apply DP-0/DP-2 layout"
+else
+  log "DP-0 and DP-2 are not both connected; leaving layout unchanged"
+fi
+
+log "after: $(xrandr --listmonitors 2>&1 | tr '\n' '; ')"
+
+# Xorg's initial pointer position is commonly 0,0, which is on the leftmost
+# monitor regardless of which output is primary. Move it to the center of the
+# physical right/primary monitor so the greeter starts where expected.
+if command -v python3 >/dev/null 2>&1; then
+  python3 - <<'PY' && logger -t sddm-gruvbox-xsetup "moved pointer to primary monitor center 3840x720" || logger -t sddm-gruvbox-xsetup "failed to move pointer"
+import ctypes
+
+x11 = ctypes.cdll.LoadLibrary("libX11.so.6")
+display = x11.XOpenDisplay(None)
+if not display:
+    raise SystemExit(1)
+
+root = x11.XDefaultRootWindow(display)
+# Center of DP-2 at 2560x0 with size 2560x1440.
+x11.XWarpPointer(display, 0, root, 0, 0, 0, 0, 3840, 720)
+x11.XFlush(display)
+x11.XCloseDisplay(display)
+PY
+fi
+
+# Do not block the greeter if monitor setup fails.
+exit 0
