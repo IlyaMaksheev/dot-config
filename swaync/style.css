@@ -1,0 +1,425 @@
+/* ── Gruvbox Dark Palette ─────────────────────────────────────────────── */
+
+:root {
+  --dark0_hard:       #1d2021;
+  --dark0_soft:       #32302f;
+  --dark1:            #3c3836;
+  --dark2:            #504945;
+  --dark3:            #665c54;
+  --dark_green_hard:  #5a633a;
+  --faded_green:      #79740e;
+  --bright_green:     #b8bb26;
+  --faded_yellow:     #b57614;
+  --bright_yellow:    #fabd2f;
+  --faded_red:        #9d0006;
+  --bright_red:       #fb4934;
+  --faded_purple:     #8f3f71;
+  --bright_blue:      #83a598;
+  --bright_aqua:      #8ec07c;
+  --light4:           #a89984;
+  --light1:           #ebdbb2;
+}
+
+/* ── Global Defaults ─────────────────────────────────────────────────── */
+
+* {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  color: var(--light1);
+}
+
+/* ── Blank Window (overlay behind control center) ────────────────────── */
+
+.blank-window {
+  background: rgba(29, 32, 33, 0.5);
+}
+
+/* ── Floating (Popup) Notifications ──────────────────────────────────── */
+
+.floating-notifications .notification-row .notification-background
+  .notification {
+  background: var(--dark1);
+  border: 2px solid var(--dark_green_hard);
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.floating-notifications .notification-row .notification-background
+  .notification:hover {
+  border-color: var(--bright_green);
+}
+
+.floating-notifications .notification-row .notification-background
+  .notification.critical {
+  border-color: var(--bright_red);
+}
+
+.floating-notifications .notification-row .notification-background
+  .notification .notification-default-action {
+  border-radius: 2px;
+  transition: background 0.15s ease-in-out;
+}
+
+.floating-notifications .notification-row .notification-background
+  .notification .notification-default-action:hover {
+  background: var(--dark2);
+  border-radius: 2px;
+}
+
+/* ── Control Center ──────────────────────────────────────────────────── */
+
+.control-center {
+  border-radius: 0;
+  border: 3px solid var(--bright_green);
+  background: var(--dark1);
+  padding: 5px;
+  margin: 5px;
+  box-shadow: none;
+}
+
+.control-center .control-center-list-placeholder {
+  color: var(--light4);
+}
+
+/* ── Notification Rows & Groups (inside control center) ──────────────── */
+
+.notification-row {
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+.notification-row:focus,
+.notification-row:focus-within {
+  outline: none;
+  background: none;
+}
+
+.notification-row:focus .notification-background .notification {
+  border-color: var(--bright_green);
+}
+
+.notification-group {
+  background: none;
+  padding: 5px 0;
+  outline: none;
+}
+
+.notification-group:focus {
+  outline: none;
+  background: none;
+  border: 1px solid var(--bright_green);
+  border-radius: 2px;
+}
+
+.notification-group .notification-group-headers .notification-group-icon {
+  color: var(--bright_green);
+}
+
+.notification-group .notification-group-headers .notification-group-header {
+  color: var(--bright_green);
+}
+
+.notification-group .notification-group-buttons .notification-group-close-button
+  .close-button {
+  background: var(--dark2);
+  border-radius: 2px;
+  color: var(--light1);
+}
+
+.notification-group .notification-group-buttons .notification-group-close-button
+  .close-button:hover {
+  background: var(--faded_purple);
+}
+
+.notification-group.collapsed .notification-row:not(:last-child)
+  .notification-background .notification {
+  background: var(--dark0_hard);
+  border: 1px solid var(--dark_green_hard);
+}
+
+/* ── Notification Cards ──────────────────────────────────────────────── */
+
+/* Match system specificity (0,0,3,0) to override border-radius and border */
+.notification-row .notification-background .notification {
+  background: var(--dark0_soft);
+  border: 1px solid var(--dark_green_hard);
+  border-radius: 2px;
+  margin: 2px 0;
+  padding: 0;
+  transition: background 0.15s ease-in-out;
+}
+
+.notification-row .notification-background .notification:hover {
+  background: var(--dark2);
+  border-color: var(--bright_green);
+}
+
+.notification-row .notification-background .notification.critical {
+  border-left: 3px solid var(--bright_red);
+}
+
+.notification-row .notification-background .notification.low {
+  border-left: 3px solid var(--dark_green_hard);
+}
+
+/* Match system specificity (0,0,4,0) to kill 12px radius on default-action */
+.notification-row .notification-background .notification
+  .notification-default-action {
+  border-radius: 2px;
+  transition: background 0.15s ease-in-out;
+}
+
+.notification-row .notification-background .notification
+  .notification-default-action:hover {
+  background: var(--dark2);
+  border-radius: 2px;
+}
+
+.notification-row .notification-background .notification
+  .notification-default-action:not(:only-child) {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+/* Control-center-specific overrides (match system specificity 0,0,4,0+) */
+.control-center .control-center-list .notification
+  .notification-default-action,
+.control-center .control-center-list .notification
+  .notification-action {
+  transition: background 0.15s ease-in-out;
+}
+
+.control-center .control-center-list .notification
+  .notification-default-action:hover,
+.control-center .control-center-list .notification
+  .notification-action:hover {
+  background-color: var(--dark2);
+}
+
+/* ── Notification Content & Text Hierarchy ───────────────────────────── */
+
+/* Match system specificity (0,0,5,0) for .notification-content */
+.notification-row .notification-background .notification
+  .notification-default-action .notification-content {
+  border-radius: 2px;
+  padding: 5px;
+}
+
+.notification-row .notification-background .notification
+  .notification-default-action .notification-content .summary {
+  color: var(--light1);
+  font-weight: bold;
+}
+
+.notification-row .notification-background .notification
+  .notification-default-action .notification-content .time {
+  color: var(--light4);
+}
+
+.notification-row .notification-background .notification
+  .notification-default-action .notification-content .body {
+  color: var(--light4);
+}
+
+.notification-row .notification-background .notification
+  .notification-default-action .notification-content .image {
+  border-radius: 2px;
+}
+
+/* ── Close Button ────────────────────────────────────────────────────── */
+
+.close-button {
+  background: var(--dark2);
+  border-radius: 2px;
+  color: var(--light1);
+}
+
+.close-button:hover {
+  background: var(--faded_purple);
+}
+
+/* ── Notification Actions ────────────────────────────────────────────── */
+
+.notification-action {
+  background: var(--dark2);
+  border: 1px solid var(--dark_green_hard);
+  border-radius: 2px;
+  color: var(--light1);
+}
+
+.notification-action:hover {
+  background: var(--dark_green_hard);
+}
+
+/* ── Inline Reply ────────────────────────────────────────────────────── */
+
+.inline-reply {
+  margin-top: 4px;
+}
+
+.inline-reply-entry {
+  background: var(--dark0_soft);
+  border: 1px solid var(--dark_green_hard);
+  border-radius: 2px;
+  color: var(--light1);
+}
+
+.inline-reply-entry:focus {
+  border-color: var(--bright_green);
+}
+
+.inline-reply-button {
+  background: var(--dark2);
+  border: 1px solid var(--dark_green_hard);
+  border-radius: 2px;
+  color: var(--light1);
+}
+
+.inline-reply-button:hover {
+  background: var(--dark_green_hard);
+}
+
+.inline-reply-button:disabled {
+  background: var(--dark0_soft);
+  color: var(--light4);
+}
+
+/* ── Widget: Buttons Grid (Night Light, etc.) ────────────────────────── */
+
+.widget-buttons-grid {
+  padding: 4px 8px;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button {
+  background: var(--dark2);
+  border: 1px solid var(--dark_green_hard);
+  border-radius: 2px;
+  color: var(--light4);
+  padding: 6px 12px;
+  font-size: 14px;
+  transition: all 0.15s ease-in-out;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
+  background: var(--dark_green_hard);
+  color: var(--light1);
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button.toggle:checked {
+  background: var(--faded_yellow);
+  border-color: var(--bright_yellow);
+  color: var(--dark0_hard);
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button.toggle:checked:hover {
+  background: var(--bright_yellow);
+}
+
+/* ── Widget Separators (general spacing between widget sections) ──────── */
+
+.widget {
+  padding: 4px 0;
+}
+
+/* ── Widget: DND Toggle ──────────────────────────────────────────────── */
+
+.widget-dnd {
+  padding: 4px 8px;
+}
+
+.widget-dnd > switch {
+  background: var(--dark2);
+  border: 1px solid var(--dark_green_hard);
+  border-radius: 2px;
+}
+
+.widget-dnd > switch:checked {
+  background: var(--dark_green_hard);
+}
+
+.widget-dnd > switch slider {
+  background: var(--light4);
+  border-radius: 2px;
+}
+
+.widget-dnd > switch:checked slider {
+  background: var(--bright_green);
+}
+
+/* ── Widget: Inhibitors ──────────────────────────────────────────────── */
+
+.widget-inhibitors {
+  padding: 4px 8px;
+}
+
+.widget-inhibitors > button {
+  background: var(--dark2);
+  border: 1px solid var(--dark_green_hard);
+  border-radius: 2px;
+  color: var(--light1);
+}
+
+.widget-inhibitors > button:hover {
+  background: var(--faded_purple);
+}
+
+/* ── Widget: Volume ──────────────────────────────────────────────────── */
+
+.widget-volume {
+  padding: 4px 8px;
+}
+
+.widget-volume scale trough {
+  background: var(--dark2);
+  border-radius: 2px;
+}
+
+.widget-volume scale trough highlight {
+  background: var(--bright_green);
+  border-radius: 2px;
+}
+
+.widget-volume scale slider {
+  background: var(--light1);
+  border-radius: 2px;
+}
+
+.per-app-volume {
+  padding: 2px 0;
+  border-bottom: 1px solid var(--dark_green_hard);
+}
+
+.per-app-volume:last-child {
+  border-bottom: none;
+}
+
+/* ── Widget: MPRIS ───────────────────────────────────────────────────── */
+
+.widget-mpris-player {
+  background: var(--dark0_soft);
+  border: 1px solid var(--dark_green_hard);
+  border-radius: 2px;
+  padding: 4px;
+}
+
+.widget-mpris-title {
+  color: var(--light1);
+  font-weight: bold;
+}
+
+.widget-mpris-subtitle {
+  color: var(--light4);
+}
+
+.mpris-overlay {
+  background-color: rgba(29, 32, 33, 0.6);
+}
+
+.mpris-background {
+  background: none;
+}
+
+.widget-mpris-player button:hover {
+  background: var(--dark2);
+  border-radius: 2px;
+}
