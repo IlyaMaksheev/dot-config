@@ -1,0 +1,14 @@
+[general]
+fullscreen = true
+early-exit = true
+copy-command = "wl-copy"
+output-filename = "~/Pictures/Screenshots/Satty-%Y%m%d-%H:%M:%S.png"
+save-after-copy = false
+initial-tool = "arrow"
+annotation-size-factor = 2
+corner-roundness = 12
+disable-notifications = false
+
+[font]
+family = "Roboto"
+style = "Regular"

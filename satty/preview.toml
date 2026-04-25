@@ -1,0 +1,20 @@
+[general]
+fullscreen = false
+early-exit = true
+copy-command = "wl-copy"
+output-filename = "~/Pictures/Screenshots/Satty-%Y%m%d-%H:%M:%S.png"
+save-after-copy = false
+initial-tool = "pointer"
+annotation-size-factor = 2
+corner-roundness = 12
+floating-hack = true
+resize = { mode = "smart" }
+disable-notifications = false
+default-hide-toolbars = true
+# app-id and title require satty > 0.20.1 (NEXTRELEASE)
+# app-id = "org.satty.preview"
+# title = "Screenshot Preview"
+
+[font]
+family = "Roboto"
+style = "Regular"
