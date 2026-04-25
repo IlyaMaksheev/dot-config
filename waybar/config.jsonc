@@ -1,0 +1,135 @@
+// -*- mode: jsonc -*-
+{
+    // Keep waybar on top between workspaces
+    "layer": "top",
+    "position": "top",
+
+    "height": 30, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+
+    // Choose the order of the modules
+    "modules-left": [
+        "niri/workspaces",
+    ],
+    "modules-center": [
+        "niri/window",
+    ],
+    "modules-right": [
+        "mpd",
+        "tray",
+        "pulseaudio",
+        "temperature",
+        "niri/language",
+        "clock",
+        "custom/notification",
+        "custom/power"
+    ],
+    "tray": {
+        "icon-size": 27,
+        "spacing": 35,
+        "icons": {
+          "blueman": "bluetooth",
+          "blueman-applet": "bluetooth",
+        }
+    },
+    "clock": {
+        "interval": 1,
+        "format": "{:%Y-%m-%d %H:%M:%S}",
+        "format-alt": "{:%A %B %d %Y %H:%M:%S}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode"          : "year",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "on-click-right": "mode",
+            "format": {
+                "months":     "<span color='#d5d39b'><b>{}</b></span>",
+                "days":       "<span color='#a89984'><b>{}</b></span>",
+                "weeks":      "<span color='#83a598'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ebdbb2'><b>{}</b></span>",
+                "today":      "<span color='#b8bb26'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": " (FH)",
+            "headset": " (HS)",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/power": {
+        "format" : "⏻",
+		"tooltip": false,
+		"menu": "on-click",
+		"menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
+		"menu-actions": {
+			"shutdown": "systemctl poweroff",
+			"reboot": "systemctl reboot",
+			"sleep": "systemctl hybrid-sleep",
+			"logout": "niri msg action quit"
+		}
+    },
+    "custom/notification": {
+        "tooltip": true,
+        "format": "<span size='16pt'>{icon}</span>",
+        "format-icons": {
+          "notification": "󱅫",
+          "none": "󰂜",
+          "dnd-notification": "󰂠",
+          "dnd-none": "󰪓",
+          "inhibited-notification": "󰂛",
+          "inhibited-none": "󰪑",
+          "dnd-inhibited-notification": "󰂛",
+          "dnd-inhibited-none": "󰪑"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client --subscribe-waybar",
+        "on-click": "swaync-client --toggle-panel --skip-wait",
+        "on-click-right": "swaync-client --toggle-dnd --skip-wait",
+        "escape": true
+    },
+	"format": "{}",
+	"rewrite": {
+		"(.*) - Mozilla Firefox": "🌎 $1",
+		"(.*) - zsh": "> [$1]"
+	},
+    "niri/workspaces": {
+        "format": "{index}",
+    },
+    "niri/window": {
+        "separate-outputs": true,
+        "icon-size": 27,
+        "format": "{title}",
+        "rewrite": {
+            "(.*) — Zen Browser": "🌎 $1",
+        }
+    },
+    "niri/language": {
+        "format": "{}",
+        "format-en": "EN",
+        "format-ru": "RU"
+    }
+}

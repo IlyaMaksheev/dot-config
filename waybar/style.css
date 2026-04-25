@@ -1,0 +1,169 @@
+/* ── Gruvbox Dark Palette ─────────────────────────────────────────────── */
+
+@define-color dark0_soft      #32302f;
+@define-color dark1           #3c3836;
+@define-color dark2           #504945;
+@define-color light1          #ebdbb2;
+@define-color light4          #a89984;
+@define-color dark_green_hard #5a633a;
+@define-color faded_green     #79740e;
+@define-color bright_green    #b8bb26;
+@define-color bright_yellow   #fabd2f;
+@define-color faded_yellow    #b57614;
+@define-color faded_red       #9d0006;
+@define-color faded_purple    #8f3f71;
+
+* {
+  /* `otf-font-awesome` is required to be installed for icons */
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 17px;
+}
+
+window#waybar {
+  background-color: @dark0_soft;
+  border-bottom: 3px solid @dark_green_hard;
+  color: @light1;
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+button {
+  /* Use box-shadow instead of border so the text isn't offset */
+  box-shadow: inset 0 -3px transparent;
+  /* Avoid rounded borders under each button name */
+  border: none;
+  border-radius: 0;
+  margin: 0 5px;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+  background: inherit;
+  box-shadow: inset 0 -3px @faded_green;
+}
+
+#clock,
+#cpu,
+#memory,
+#disk,
+#pulseaudio {
+  padding: 10px 10px;
+  color: @light1;
+}
+
+#tray {
+  color: @light1;
+}
+
+#window,
+#workspaces {
+  margin: 0px;
+}
+
+#workspaces button {
+  margin: 0 5px;
+  padding: 0 10px;
+  background-color: transparent;
+  color: @light1;
+}
+
+#workspaces button:hover {
+  background: @dark2;
+}
+
+#workspaces button.focused, #workspaces button.active {
+  background-color: @dark_green_hard;
+  box-shadow: inset 0 -3px @bright_green;
+}
+
+#workspaces button.urgent {
+  background-color: @faded_yellow;
+  box-shadow: inset 0 -3px @bright_yellow;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+  margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+  margin-right: 0;
+}
+
+label:focus {
+  background-color: @dark2;
+  box-shadow: inset 0 -3px @faded_green;
+}
+
+#clock:hover {
+  background-color: @dark2;
+  box-shadow: inset 0 -3px @faded_green;
+}
+
+/* you can set a style on hover for any module like this */
+#pulseaudio:hover {
+  background-color: @dark2;
+  box-shadow: inset 0 -3px @faded_green;
+}
+
+#pulseaudio.muted {
+  background-color: @faded_red;
+}
+
+#tray > .passive,
+#tray > .active,
+#tray > .needs-attention {
+  padding: 2px 5px;
+}
+
+#tray > .passive:hover,
+#tray > .active:hover,
+#tray > .needs-attention:hover {
+  background-color: @dark2;
+  color: @light1;
+  box-shadow: inset 0 -3px @faded_green;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: @faded_yellow;
+}
+
+#language {
+  padding: 0 5px;
+  margin: 5px 5px;
+  min-width: 30px;
+}
+
+#custom-notification {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  padding: 10px;
+}
+
+#custom-notification:hover {
+  background: @dark2;
+  box-shadow: inset 0 -3px @faded_green;
+}
+
+tooltip {
+  background: @dark1;
+  border: 3px solid @dark_green_hard;
+}
+
+tooltip label {
+  color: @light1;
+}
+
+#custom-power {
+  padding: 10px;
+}
+
+#custom-power:hover {
+  background: @dark2;
+  box-shadow: inset 0 -3px @faded_green;
+}
