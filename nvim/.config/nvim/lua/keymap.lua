@@ -97,3 +97,51 @@ keymap.set("n", "<leader>n", create_scratch_buffer, { desc = "Create scratch buf
 
 keymap.set("n", "<leader>bl", "<cmd>set list!<CR>", { desc = "Toggle show hidden characters" })
 keymap.set("n", "<leader>bs", "<cmd>set spell!<CR>", { desc = "Toggle spell check" })
+
+local function copy(text)
+  vim.fn.setreg("+", text) -- system clipboard
+  vim.notify("Copied: " .. text)
+end
+
+-- Copy WORD under cursor, like W / diW text object
+vim.keymap.set(
+  "n",
+  "<leader>yw",
+  function() copy(vim.fn.expand("<cWORD>")) end,
+  { desc = "Copy WORD under cursor to clipboard" }
+)
+
+local copy_under_the_cursor = function()
+  local file = vim.fn.expand("<cfile>")
+
+  if file == "" then
+    vim.notify("No file under cursor", vim.log.levels.WARN)
+    return
+  end
+
+  -- expand ~ and environment variables
+  file = vim.fn.expand(file)
+
+  -- try to resolve relative paths using 'path', similar to gf
+  local found = vim.fn.findfile(file, vim.o.path)
+  if found ~= "" then
+    file = found
+  end
+
+  local real = vim.fn.system({ "realpath", "--", file }):gsub("\n$", "")
+
+  if vim.v.shell_error ~= 0 then
+    vim.notify("realpath failed for: " .. file, vim.log.levels.ERROR)
+    return
+  end
+
+  copy(real)
+end
+
+-- Copy file path under cursor as realpath, gf-like
+vim.keymap.set(
+  "n",
+  "<leader>yf",
+  copy_under_the_cursor,
+  { desc = "Copy realpath of file under cursor to clipboard" }
+)
