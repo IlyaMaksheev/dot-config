@@ -85,4 +85,4 @@ require("oil").setup({
   },
 })
 
-vim.keymap.set("n", "<leader>T", "<cmd>Oil<CR>")
+vim.keymap.set("n", "<leader>t", "<cmd>Oil<CR>")
