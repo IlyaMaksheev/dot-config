@@ -74,6 +74,12 @@ vim.keymap.set("n", "<leader>yn", function()
   print("File name: ", path)
 end, { desc = "Copy file name" })
 
+vim.keymap.set("n", "<leader>yb", function()
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  vim.fn.setreg("+", lines, "l")
+  vim.notify("Copied current buffer to clipboard")
+end, { desc = "Copy current buffer to clipboard" })
+
 -- Add some --insert-- mode keybindings
 keymap.set("i", "<C-e>", "<C-o>$", { desc = "Move to the end" })
 keymap.set("i", "<C-a>", "<C-o>^", { desc = "Move to the start" })
@@ -144,4 +150,13 @@ vim.keymap.set(
   "<leader>yf",
   copy_under_the_cursor,
   { desc = "Copy realpath of file under cursor to clipboard" }
+)
+
+vim.keymap.set(
+  "n",
+  "<leader>ys",
+  function()
+    copy(vim.v.servername)
+  end,
+  { desc = "Copy neovim server filename" }
 )
