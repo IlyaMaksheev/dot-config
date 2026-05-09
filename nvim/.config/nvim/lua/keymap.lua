@@ -13,7 +13,7 @@ keymap.set('n', 'gl', '<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-l><CR>', { 
 keymap.set("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit" })
 keymap.set("n", "<leader>Q", "<cmd>quit!<CR>", { desc = "Force quit" })
 
-keymap.set("t", "<C-Q>", "<C-\\><C-n>", { desc = "Exit from terminal" })
+keymap.set("t", "<C-G>", "<C-\\><C-n>", { desc = "Exit from terminal" })
 
 local quickfix_list_function = function()
   local windows = vim.fn.getwininfo()
