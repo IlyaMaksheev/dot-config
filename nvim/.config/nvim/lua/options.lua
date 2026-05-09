@@ -78,7 +78,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "help",
-  command = "wincmd H"
+  command = "wincmd o"
 })
 
 vim.api.nvim_create_autocmd("VimResized", {
