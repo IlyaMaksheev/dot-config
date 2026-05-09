@@ -30,6 +30,14 @@ window-rule {
 }
 
 window-rule {
+    match app-id="Telegram" title=r#"^Choose Files$"#
+
+    open-floating true
+
+    default-floating-position x=10 y=10 relative-to="bottom-left"
+}
+
+window-rule {
     match app-id=r#"^org\.pulseaudio\.pavucontrol$"#
     match app-id=r#"^blueman-manager$"#
     open-floating true
@@ -49,11 +57,18 @@ window-rule {
 }
 
 window-rule {
+    match app-id="steam" title=r#"^Friends List$"#
+
+    open-floating true
+
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
+window-rule {
     match app-id=r#"^com\.gabm\.satty$"# title="satty"
 
     open-floating true
 }
-
 
 window-rule {
     match app-id=r#"^discord$"# title="Discord Updater"
@@ -94,4 +109,3 @@ window-rule {
     // Use this instead if you want them visible on third-party screenshot tools.
     // block-out-from "screencast"
 }
-
