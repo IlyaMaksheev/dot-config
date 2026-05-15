@@ -1,6 +1,7 @@
 vim.g.mapleader = " "
 
 local keymap = vim.keymap
+local yank_highlight = require("yank-highlight")
 
 keymap.set("n", "<leader>ol", vim.pack.update, { desc = "Open VimPack update" })
 keymap.set("n", "<leader>ot", "<cmd>terminal<CR>", { desc = "Open terminal" })
@@ -65,18 +66,19 @@ keymap.set("n", "<leader>R", get_make_arguments, { desc = "Run make program with
 vim.keymap.set("n", "<leader>yp", function()
   local path = vim.fn.expand("%:p")
   vim.fn.setreg("+", path)
-  print("File path: ", path)
+  vim.notify("Copied file path: " .. path)
 end, { desc = "Copy file full path" })
 
 vim.keymap.set("n", "<leader>yn", function()
   local path = vim.fn.expand("%:t")
   vim.fn.setreg("+", path)
-  print("File name: ", path)
+  vim.notify("Copied file name: " .. path)
 end, { desc = "Copy file name" })
 
 vim.keymap.set("n", "<leader>yb", function()
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
   vim.fn.setreg("+", lines, "l")
+  yank_highlight.highlight_buffer()
   vim.notify("Copied current buffer to clipboard")
 end, { desc = "Copy current buffer to clipboard" })
 
@@ -113,7 +115,10 @@ end
 vim.keymap.set(
   "n",
   "<leader>yw",
-  function() copy(vim.fn.expand("<cWORD>")) end,
+  function()
+    copy(vim.fn.expand("<cWORD>"))
+    yank_highlight.highlight_cWORD()
+  end,
   { desc = "Copy WORD under cursor to clipboard" }
 )
 
@@ -142,6 +147,7 @@ local copy_under_the_cursor = function()
   end
 
   copy(real)
+  yank_highlight.highlight_cfile()
 end
 
 -- Copy file path under cursor as realpath, gf-like
