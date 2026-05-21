@@ -21,9 +21,3 @@ vim.keymap.set("n", "<A-Up>", sp.resize_up)
 vim.keymap.set("n", "<A-Right>", sp.resize_right)
 
 vim.keymap.set("n", "<A-\\>", sp.move_cursor_previous)
-
--- swapping buffers between windows
-vim.keymap.set("n", "<leader><leader>h", sp.swap_buf_left, { desc = "Swap buffer to left" })
-vim.keymap.set("n", "<leader><leader>j", sp.swap_buf_down, { desc = "Swap buffer to down" })
-vim.keymap.set("n", "<leader><leader>k", sp.swap_buf_up, { desc = "Swap buffer to up" })
-vim.keymap.set("n", "<leader><leader>l", sp.swap_buf_right, { desc = "Swap buffer to right" })
