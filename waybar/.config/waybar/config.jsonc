@@ -18,6 +18,7 @@
     "modules-right": [
         "mpd",
         "tray",
+        "bluetooth",
         "pulseaudio",
         "temperature",
         "niri/language",
@@ -60,6 +61,34 @@
             "on-scroll-down": "shift_down"
         }
     },
+    "bluetooth": {
+      "format": "",
+      "format-disabled": "", // an empty format will hide the module
+      "format-connected": " {num_connections}",
+      "format-connected-battery": " {icon} {device_battery_percentage}%",
+      "format-device-preference": [
+        "Corne MX",
+        "WH-1000XM5"
+      ],
+      "format-icons": [
+        "󰂎",
+        "󰁺",
+        "󰁻",
+        "󰁼",
+        "󰁽",
+        "󰁾",
+        "󰁿",
+        "󰂀",
+        "󰂁",
+        "󰂂",
+        "󰁹"
+      ],
+      "tooltip-format": "Bluetooth {status}",
+      "tooltip-format-connected": "Bluetooth Active\n{device_enumerate}",
+      "tooltip-format-enumerate-connected": "{device_alias}",
+      "tooltip-format-enumerate-connected-battery": "{device_alias} 󰁹 {device_battery_percentage}%",
+      "on-click": "rofi-bluetooth"
+    },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon} {format_source}",
@@ -70,8 +99,8 @@
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
-            "hands-free": " (FH)",
-            "headset": " (HS)",
+            "hands-free": " ",
+            "headset": " ",
             "phone": "",
             "portable": "",
             "car": "",

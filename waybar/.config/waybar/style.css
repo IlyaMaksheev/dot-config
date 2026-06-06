@@ -50,12 +50,10 @@ button:hover {
 #cpu,
 #memory,
 #disk,
+#network,
+#bluetooth,
 #pulseaudio {
   padding: 10px 10px;
-  color: @light1;
-}
-
-#tray {
   color: @light1;
 }
 
@@ -95,17 +93,9 @@ button:hover {
   margin-right: 0;
 }
 
-label:focus {
-  background-color: @dark2;
-  box-shadow: inset 0 -3px @faded_green;
-}
-
-#clock:hover {
-  background-color: @dark2;
-  box-shadow: inset 0 -3px @faded_green;
-}
-
-/* you can set a style on hover for any module like this */
+#label:focus,
+#clock:hover,
+#bluetooth:hover,
 #pulseaudio:hover {
   background-color: @dark2;
   box-shadow: inset 0 -3px @faded_green;
@@ -113,6 +103,11 @@ label:focus {
 
 #pulseaudio.muted {
   background-color: @faded_red;
+}
+
+#tray {
+  color: @light1;
+  margin: 0px 5px 0px 0px;
 }
 
 #tray > .passive,
