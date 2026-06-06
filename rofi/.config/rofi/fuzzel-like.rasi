@@ -1,0 +1,139 @@
+/* Gruvbox-ish rofi theme matched to ~/.config/fuzzel/fuzzel.ini */
+* {
+    bg:              #3c3836ff;
+    fg:              #a89984ff;
+    bright:          #f2e5bcff;
+    match:           #689d6aff;
+    selected-bg:     #504945ff;
+    selected-fg:     #bdae93ff;
+    selected-match:  #e6e9c1ff;
+    muted:           #7c6f64ff;
+    border:          #b8bb26ff;
+
+    background-color: transparent;
+    text-color:       var(fg);
+    font:             "JetBrainsMono Nerd Font Propo 12";
+}
+
+window {
+    location:         center;
+    anchor:           center;
+    width:            30em;
+    padding:          8px;
+    background-color: var(bg);
+    border:           3px;
+    border-color:     var(border);
+    border-radius:    3px;
+}
+
+mainbox {
+    padding: 0;
+    spacing: 8px;
+    background-color: transparent;
+}
+
+inputbar {
+    padding:    0;
+    spacing:    6px;
+    text-color: var(bright);
+    children:   [ "prompt", "entry", "num-filtered-rows", "textbox-num-sep", "num-rows" ];
+}
+
+prompt {
+    text-color: var(bright);
+}
+
+entry {
+    text-color:        var(bright);
+    placeholder-color: var(muted);
+    placeholder:       "Type to filter";
+}
+
+num-filtered-rows {
+    text-color: var(muted);
+    expand:     false;
+}
+
+num-rows {
+    text-color: var(muted);
+    expand:     false;
+}
+
+textbox-num-sep {
+    text-color: var(muted);
+    expand:     false;
+    str:        "/";
+}
+
+message {
+    padding:    0;
+    text-color: var(bright);
+}
+
+textbox {
+    text-color: var(bright);
+}
+
+listview {
+    padding:      0;
+    spacing:      2px;
+    lines:        15;
+    fixed-height: false;
+    scrollbar:    false;
+    border:       0;
+}
+
+element {
+    padding:       4px 6px;
+    spacing:       8px;
+    border:        0;
+    border-radius: 3px;
+    cursor:        pointer;
+    text-color:    var(fg);
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color:       var(fg);
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color:       var(fg);
+}
+
+element selected.normal {
+    background-color: var(selected-bg);
+    text-color:       var(selected-fg);
+}
+
+element selected.active {
+    background-color: var(selected-bg);
+    text-color:       var(selected-fg);
+}
+
+element selected.urgent {
+    background-color: var(selected-bg);
+    text-color:       var(selected-fg);
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    highlight:        bold #689d6aff;
+}
+
+element selected element-text {
+    highlight: bold #e6e9c1ff;
+}
+
+element-icon {
+    background-color: transparent;
+    size:             1.1em;
+    text-color:       inherit;
+}
+
+scrollbar {
+    width:        0;
+    handle-width: 0;
+}

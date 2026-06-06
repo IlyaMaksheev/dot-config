@@ -1,0 +1,40 @@
+configuration {
+    modes: "drun,filebrowser";
+    show-icons: true;
+    drun-show-actions: true;
+    font: "JetBrainsMono Nerd Font Propo 12";
+    matching: "fuzzy";
+    sorting-method: "fzf";
+    sort: true;
+    drun-match-fields: "name,generic";
+
+    display-drun: "Apps";
+    display-run: "Run";
+    display-filebrowser: "Files";
+    display-ssh: "SSH";
+
+    kb-accept-entry: "Control+y,Return,KP_Enter";
+    kb-accept-custom: "Control+Return";
+    kb-accept-alt: "Shift+Return";
+
+    kb-cancel: "Escape,Control+g,Control+bracketleft";
+
+    kb-row-up: "Up,Control+p";
+    kb-row-down: "Down,Control+n";
+    kb-page-prev: "Page_Up";
+    kb-page-next: "Page_Down";
+
+    kb-element-next: "";
+    kb-element-prev: "";
+    kb-mode-next: "Shift+Right,Tab";
+    kb-mode-previous: "Shift+Left,ISO_Left_Tab";
+
+    kb-clear-line: "Control+w";
+    kb-remove-to-sol: "Control+u";
+    kb-remove-to-eol: "Control+k";
+
+    kb-toggle-sort: "Alt+grave";
+    kb-toggle-case-sensitivity: "grave,dead_grave";
+}
+
+@theme "fuzzel-like"

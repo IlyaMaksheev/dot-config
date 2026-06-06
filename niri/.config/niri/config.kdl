@@ -307,7 +307,7 @@ binds {
     Mod+M hotkey-overlay-title="Open the telegram" { spawn "Telegram"; }
     Mod+D hotkey-overlay-title="Open the discord" { spawn "discord"; }
 
-    Alt+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Alt+Space hotkey-overlay-title="Run an application selector" { spawn "rofi" "-show" "drun"; }
 
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
