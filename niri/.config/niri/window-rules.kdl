@@ -40,7 +40,11 @@ window-rule {
 window-rule {
     match app-id=r#"^org\.pulseaudio\.pavucontrol$"#
     match app-id=r#"^blueman-manager$"#
+    match app-id=r#"^nm-connection-editor$"#
+
     open-floating true
+    default-column-width { fixed 560; }
+    default-window-height { fixed 520; }
 }
 
 window-rule {

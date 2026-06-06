@@ -95,6 +95,7 @@ button:hover {
 
 #label:focus,
 #clock:hover,
+#network:hover,
 #bluetooth:hover,
 #pulseaudio:hover {
   background-color: @dark2;
