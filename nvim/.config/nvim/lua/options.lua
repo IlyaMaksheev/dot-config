@@ -59,7 +59,7 @@ vim.filetype.add {
   }
 }
 
-opt.spelllang = "en"
+opt.spelllang = "en,ru"
 opt.spell = true
 opt.spelloptions = "camel"
 
@@ -97,3 +97,7 @@ vim.opt.wildoptions = "pum"
 vim.opt.complete = "o^5,.^5,w^5,b^5,u^5,kspell^5"
 
 vim.opt.listchars = "eol:$,space:\\u2022"
+
+vim.opt.keymap = "russian-jcukenwin"
+vim.opt.iminsert = 0
+vim.opt.imsearch = -1
