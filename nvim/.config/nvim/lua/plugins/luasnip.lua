@@ -23,7 +23,7 @@ luasnip.filetype_extend("typescriptreact", { "javascript", "html" })
 luasnip.filetype_extend("javascriptreact", { "javascript", "html" })
 luasnip.filetype_extend("html", { "javascriptreact", "typecriptreact" })
 
-vim.keymap.set({ "i", "s" }, "<C-e>", function()
+vim.keymap.set({ "i", "s" }, "<C-l>", function()
   if luasnip.choice_active() then
     vim.ui.select(
       luasnip.get_current_choices(),

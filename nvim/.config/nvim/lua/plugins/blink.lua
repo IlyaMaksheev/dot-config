@@ -39,6 +39,22 @@ blink.setup({
   signature = { enabled = true },
 
   keymap = {
-    preset = "default"
+    preset = "default",
+
+    ["<C-e>"] = {
+      function(cmp)
+        if cmp.is_menu_visible() then
+          return cmp.cancel()
+        end
+
+        vim.api.nvim_feedkeys(
+          vim.api.nvim_replace_termcodes("<End>", true, false, true),
+          "n",
+          false
+        )
+
+        return true
+      end,
+    },
   }
 })
