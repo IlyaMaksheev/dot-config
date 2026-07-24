@@ -71,7 +71,7 @@
         "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
         "tooltip-format-ethernet": "{ifname} ",
         "tooltip-format-disconnected": "󰖪",
-        "on-click": "nm-connection-editor",
+        "on-click": "networkmanager_dmenu",
         "max-length": 50,
     },
     "bluetooth": {
