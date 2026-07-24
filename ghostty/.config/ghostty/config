@@ -2,7 +2,8 @@
 # custom-shader-animation=always
 
 gtk-single-instance = true
-quit-after-last-window-closed = false
+quit-after-last-window-closed = true
+quit-after-last-window-closed-delay = 1m
 
 shell-integration-features=true
 theme = gruvbox-dark-custom
