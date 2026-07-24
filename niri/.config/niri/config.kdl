@@ -304,7 +304,7 @@ binds {
     Mod+T hotkey-overlay-title="Open a file Search" { spawn "ghostty" "-e" "yazi"; }
     Mod+I hotkey-overlay-title="Open a notification manager" { spawn "swaync-client" "--toggle-panel"; }
     Mod+Y hotkey-overlay-title="Open the btop" { spawn "ghostty" "-e" "btop"; }
-    Mod+M hotkey-overlay-title="Open the telegram" { spawn "Telegram"; }
+    Mod+M hotkey-overlay-title="Open the telegram" { spawn "env" "QT_QPA_PLATFORMTHEME=xdgdesktopportal" "QT_QPA_PLATFORMTHEME_QT6=xdgdesktopportal" "Telegram"; }
     Mod+D hotkey-overlay-title="Open the discord" { spawn "discord"; }
 
     Alt+Space hotkey-overlay-title="Run an application selector" { spawn "rofi" "-show" "drun"; }
