@@ -1,13 +1,13 @@
 /* Gruvbox-ish rofi theme matched to ~/.config/fuzzel/fuzzel.ini */
 * {
     bg:              #3c3836ff;
-    fg:              #a89984ff;
+    fg:              #f2e5bcff;
     bright:          #f2e5bcff;
     match:           #689d6aff;
     selected-bg:     #504945ff;
-    selected-fg:     #bdae93ff;
+    selected-fg:     #f9f5d7ff;
     selected-match:  #e6e9c1ff;
-    muted:           #7c6f64ff;
+    muted:           #7c6f64;
     border:          #b8bb26ff;
 
     background-color: transparent;
