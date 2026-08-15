@@ -43,6 +43,46 @@ function M.highlight_buffer()
   M.highlight_range(0, 0, line_count, 0)
 end
 
+function M.highlight_selection(first, last, selection_type)
+  local buffer = vim.api.nvim_get_current_buf()
+  local start_pos, end_pos = first, last
+
+  if first[2] > last[2] or (first[2] == last[2] and first[3] > last[3]) then
+    start_pos, end_pos = last, first
+  end
+
+  vim.api.nvim_buf_clear_namespace(buffer, namespace, 0, -1)
+
+  if selection_type == "V" then
+    vim.api.nvim_buf_set_extmark(buffer, namespace, start_pos[2] - 1, 0, {
+      end_row = end_pos[2],
+      end_col = 0,
+      hl_group = highlight_group,
+      hl_eol = true,
+    })
+  elseif selection_type == "\22" then
+    local start_col = math.min(first[3], last[3]) - 1
+    local end_col = math.max(first[3], last[3])
+
+    for row = math.min(first[2], last[2]) - 1, math.max(first[2], last[2]) - 1 do
+      vim.api.nvim_buf_set_extmark(buffer, namespace, row, start_col, {
+        end_row = row,
+        end_col = end_col,
+        hl_group = highlight_group,
+      })
+    end
+  else
+    vim.api.nvim_buf_set_extmark(buffer, namespace, start_pos[2] - 1, start_pos[3] - 1, {
+      end_row = end_pos[2] - 1,
+      end_col = end_pos[3],
+      hl_group = highlight_group,
+      hl_eol = true,
+    })
+  end
+
+  clear_highlight(buffer)
+end
+
 local function highlight_text_under_cursor(text)
   if text == "" then
     return

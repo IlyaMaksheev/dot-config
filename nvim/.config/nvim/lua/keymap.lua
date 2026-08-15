@@ -82,6 +82,73 @@ vim.keymap.set("n", "<leader>yb", function()
   vim.notify("Copied current buffer to clipboard")
 end, { desc = "Copy current buffer to clipboard" })
 
+local function trim_trailing_whitespace(lines)
+  return vim.tbl_map(function(line)
+    return line:gsub("%s+$", "")
+  end, lines)
+end
+
+local function extract_fenced_code(lines)
+  if #lines < 2 or not lines[1]:match("^%s*```[^`]*$") or not lines[#lines]:match("^%s*```%s*$") then
+    return lines, false
+  end
+
+  local code = vim.list_slice(lines, 2, #lines - 1)
+  local indentation
+
+  for index, line in ipairs(code) do
+    if line:match("^%s*$") then
+      code[index] = ""
+    else
+      local current = #(line:match("^%s*") or "")
+      indentation = math.min(indentation or current, current)
+    end
+  end
+
+  if indentation and indentation > 0 then
+    for index, line in ipairs(code) do
+      if line ~= "" then
+        code[index] = line:sub(indentation + 1)
+      end
+    end
+  end
+
+  return code, true
+end
+
+local function yank_cleaned_selection()
+  local selection_type = vim.fn.mode()
+  local selection_start = vim.fn.getpos("v")
+  local selection_end = vim.fn.getpos(".")
+  local lines = vim.fn.getregion(selection_start, selection_end, { type = selection_type })
+
+  lines = trim_trailing_whitespace(lines)
+
+  local fenced
+  lines, fenced = extract_fenced_code(lines)
+  local register_type = fenced and "V" or selection_type
+
+  -- Keep Vim paste and the system clipboard consistent with a regular yank.
+  vim.fn.setreg('"', lines, register_type)
+  vim.fn.setreg("+", lines, register_type)
+  vim.fn.setreg("0", lines, register_type)
+
+  if fenced and #lines > 0 then
+    local first_row = math.min(selection_start[2], selection_end[2]) + 1
+    local last_row = math.max(selection_start[2], selection_end[2]) - 1
+    yank_highlight.highlight_selection({ 0, first_row, 1, 0 }, { 0, last_row, 1, 0 }, "V")
+  else
+    yank_highlight.highlight_selection(selection_start, selection_end, selection_type)
+  end
+
+  -- A Lua visual-mode callback does not leave Visual mode like the built-in
+  -- yank operator does, so explicitly finish the selection.
+  local escape = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+  vim.api.nvim_feedkeys(escape, "nx", false)
+end
+
+vim.keymap.set("x", "<leader>y", yank_cleaned_selection, { desc = "Yank cleaned selection" })
+
 -- Add some --insert-- mode keybindings
 keymap.set("i", "<C-e>", "<C-o>$", { desc = "Move to the end" })
 keymap.set("i", "<C-a>", "<C-o>^", { desc = "Move to the start" })
