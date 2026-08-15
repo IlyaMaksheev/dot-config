@@ -34,11 +34,15 @@ Scope {
                 }
             }
 
-            ClockWidget {
+            Row {
+                spacing: 4
                 anchors {
                     right: parent.right
                     verticalCenter: parent.verticalCenter
                 }
+
+                Tray {}
+                ClockWidget {}
             }
 
             Rectangle {

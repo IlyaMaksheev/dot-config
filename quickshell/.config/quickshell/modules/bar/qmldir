@@ -2,3 +2,4 @@ ActiveWindow 1.0 ActiveWindow.qml
 Bar 1.0 Bar.qml
 ClockWidget 1.0 ClockWidget.qml
 Workspaces 1.0 Workspaces.qml
+Tray 1.0 Tray.qml
