@@ -2,6 +2,7 @@ vim.diagnostic.config({ virtual_text = { current_line = true } })
 
 vim.lsp.enable("ruff")
 vim.lsp.enable("basedpyright")
+vim.lsp.enable("qmlls")
 
 vim.keymap.set('n', 'grK', function()
   vim.ui.select(

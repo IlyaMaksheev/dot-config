@@ -4,9 +4,8 @@ vim.pack.add({
 
 require("conform").setup({
   formatters = {
-    python = {
-      "ruff_organize_imports",
-    }
+    python = { "ruff_organize_imports" },
+    qml = { "qmlformat" }
   },
   default_format_opts = {
     lsp_format = "fallback",
