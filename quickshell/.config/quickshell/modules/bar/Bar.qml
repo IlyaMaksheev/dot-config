@@ -24,6 +24,16 @@ Scope {
                 outputName: modelData.name
             }
 
+            ActiveWindow {
+                outputName: modelData.name
+                width: Math.min(implicitWidth, parent.width / 2)
+
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+            }
+
             ClockWidget {
                 anchors {
                     right: parent.right
