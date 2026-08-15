@@ -1,0 +1,47 @@
+import Quickshell
+import QtQuick
+import "../../theme"
+
+Scope {
+
+    Variants {
+        model: Quickshell.screens
+
+        // qmllint disable uncreatable-type
+        PanelWindow {
+            required property var modelData
+
+            color: Appearance.dark0_soft
+            anchors {
+                top: true
+                left: true
+                right: true
+            }
+            screen: modelData
+            implicitHeight: Appearance.barHeight
+
+            Workspaces {
+                outputName: modelData.name
+            }
+
+            ClockWidget {
+                anchors {
+                    right: parent.right
+                    verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Rectangle {
+                height: Appearance.accentHeight
+                color: Appearance.dark_green_hard
+
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
+            }
+        }
+        // qmllint enable uncreatable-type
+    }
+}
