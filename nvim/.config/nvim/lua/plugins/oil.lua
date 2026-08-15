@@ -3,37 +3,6 @@ vim.pack.add({
   "https://github.com/nvim-tree/nvim-web-devicons.git"
 })
 
-local select_function = function()
-  local oil = require("oil")
-  local current_entry = oil.get_cursor_entry()
-
-  if current_entry ~= nil and current_entry.type == "directory" then
-    local current_buffer = vim.api.nvim_get_current_buf()
-
-    vim.schedule(
-      function()
-        vim.api.nvim_buf_delete(current_buffer, {})
-      end
-    )
-  end
-
-  oil.select()
-end
-
-local parent_function = function()
-  local oil = require("oil")
-
-  local current_buffer = vim.api.nvim_get_current_buf()
-
-  vim.schedule(
-    function()
-      vim.api.nvim_buf_delete(current_buffer, {})
-    end
-  )
-
-  oil.open()
-end
-
 require("oil").setup({
   default_file_explorer = true,
   columns = {
@@ -43,8 +12,8 @@ require("oil").setup({
     "icon",
   },
   buf_options = {
-    buflisted = true,
-    bufhidden = "hide"
+    buflisted = false,
+    bufhidden = "hide",
   },
   win_options = {
     wrap = false,
@@ -56,18 +25,18 @@ require("oil").setup({
     conceallevel = 3,
     concealcursor = "nvic",
   },
-  cleanup_delay_ms = false,
+  cleanup_delay_ms = 2000,
   use_default_keymaps = false,
   keymaps = {
     ["g?"] = { "actions.show_help", mode = "n" },
-    ["<CR>"] = { select_function },
-    ["<C-y>"] = { select_function },
+    ["<CR>"] = "actions.select",
+    ["<C-y>"] = "actions.select",
 
     ["<leader>v"] = { "actions.select", opts = { vertical = true, split = "belowright" } },
     ["<leader>s"] = { "actions.select", opts = { horizontal = true, split = "belowright" } },
     ["<C-q>"] = { "actions.send_to_qflist", opts = { action = "r", only_matching_search = true, target = "qflist" } },
 
-    ["-"] = { parent_function, mode = "n" },
+    ["-"] = { "actions.parent", mode = "n" },
     ["_"] = { "actions.open_cwd", mode = "n" },
 
     ["<leader>p>"] = "actions.preview",
