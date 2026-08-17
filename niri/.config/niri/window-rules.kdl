@@ -89,11 +89,6 @@ window-rule {
     open-maximized true
 }
 
-window-rule {
-    match app-id=r#"^chromium$"#
-    open-focused false
-}
-
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
 window-rule {
