@@ -41,6 +41,7 @@ require("undotree")
 require("yank-highlight")
 require("lsp")
 require("lazygit")
+require("terminal")
 
 require("plugins.snacks")
 require("plugins.which-key")
