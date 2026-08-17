@@ -363,23 +363,27 @@
   background: var(--faded_purple);
 }
 
-/* ── Widget: Volume ──────────────────────────────────────────────────── */
+/* ── Widgets: Volume & Brightness ────────────────────────────────────── */
 
-.widget-volume {
+.widget-volume,
+.widget-backlight {
   padding: 4px 8px;
 }
 
-.widget-volume scale trough {
+.widget-volume scale trough,
+.widget-backlight scale trough {
   background: var(--dark2);
   border-radius: 2px;
 }
 
-.widget-volume scale trough highlight {
+.widget-volume scale trough highlight,
+.widget-backlight scale trough highlight {
   background: var(--bright_green);
   border-radius: 2px;
 }
 
-.widget-volume scale slider {
+.widget-volume scale slider,
+.widget-backlight scale slider {
   background: var(--light1);
   border-radius: 2px;
 }

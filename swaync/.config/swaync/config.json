@@ -36,6 +36,7 @@
     "buttons-grid",
     "dnd",
     "inhibitors",
+    "backlight",
     "volume",
     "notifications",
     "mpris"
@@ -65,6 +66,12 @@
       "show-per-app": true,
       "show-per-app-icon": true,
       "show-per-app-label": true
+    },
+    "backlight": {
+      "label": "󰃠",
+      "device": "intel_backlight",
+      "subsystem": "backlight",
+      "min": 1
     },
     "mpris": {
       "autohide": true
