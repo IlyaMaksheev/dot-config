@@ -235,8 +235,10 @@ spawn-at-startup "swaync"
 spawn-at-startup "xwayland-satellite" 
 
 environment {
-  QT_QPA_PLATFORMTHEME "gtk3"
-  QT_QPA_PLATFORMTHEME_QT6 "gtk3"
+  // Use KDE's Qt platform integration so KDE applications load kdeglobals,
+  // including the GruvboxDark palette, instead of mixing GTK and KDE colors.
+  QT_QPA_PLATFORMTHEME "kde"
+  QT_QPA_PLATFORMTHEME_QT6 "kde"
 }
 cursor {
     hide-when-typing
