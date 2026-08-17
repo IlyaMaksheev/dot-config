@@ -22,6 +22,7 @@
         "bluetooth",
         "pulseaudio",
         "temperature",
+        "battery",
         "niri/language",
         "clock",
         "custom/notification",
@@ -106,8 +107,8 @@
         // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format-bluetooth-muted": "󰖁 {icon} {format_source}",
+        "format-muted": "󰖁 {format_source}",
         "format-source": "",
         "format-source-muted": "",
         "format-icons": {
@@ -120,6 +121,40 @@
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
+    },
+    "battery": {
+        "bat": "BAT0",
+        "adapter": "ADP1",
+        "interval": 10,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% 󰂄",
+        "format-plugged": "{capacity}% ",
+        "format-full": "{capacity}% 󰁹",
+        "format-time": "{H}h {M}m",
+        "format-icons": [
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾",
+            "󰁿",
+            "󰂀",
+            "󰂁",
+            "󰂂",
+            "󰁹"
+        ],
+        "tooltip-format": "{capacity}%\n{time}\nPower: {power} W\nHealth: {health}%",
+        "menu": "on-click",
+        "menu-file": "$HOME/.config/waybar/power_profile_menu.xml",
+        "menu-actions": {
+            "power-saver": "powerprofilesctl set power-saver",
+            "balanced": "powerprofilesctl set balanced",
+            "performance": "powerprofilesctl set performance"
+        }
     },
     "custom/power": {
         "format" : "⏻",

@@ -52,7 +52,9 @@ button:hover {
 #disk,
 #network,
 #bluetooth,
-#pulseaudio {
+#pulseaudio,
+#temperature,
+#battery {
   padding: 10px 10px;
   color: @light1;
 }
@@ -97,7 +99,8 @@ button:hover {
 #clock:hover,
 #network:hover,
 #bluetooth:hover,
-#pulseaudio:hover {
+#pulseaudio:hover,
+#battery:hover {
   background-color: @dark2;
   box-shadow: inset 0 -3px @faded_green;
 }
@@ -105,6 +108,22 @@ button:hover {
 #pulseaudio.muted {
   background-color: @faded_red;
 }
+
+#battery.charging,
+#battery.plugged,
+#battery.full {
+  color: @bright_green;
+}
+
+#battery.warning:not(.charging) {
+  color: @bright_yellow;
+}
+
+#battery.critical:not(.charging) {
+  color: @light1;
+  background-color: @faded_red;
+}
+
 
 #tray {
   color: @light1;
@@ -162,4 +181,34 @@ tooltip label {
 #custom-power:hover {
   background: @dark2;
   box-shadow: inset 0 -3px @faded_green;
+}
+
+/* GTK menus created by Waybar, including battery profiles and power actions. */
+menu {
+  background-color: @dark0_soft;
+  color: @light1;
+  border: 2px solid @dark_green_hard;
+  padding: 4px;
+}
+
+menu menuitem {
+  background-color: transparent;
+  color: @light1;
+  padding: 6px 12px;
+}
+
+menu menuitem:hover,
+menu menuitem:focus {
+  background-color: @dark2;
+  color: @light1;
+}
+
+menu menuitem:disabled {
+  color: @light4;
+}
+
+menu separator {
+  background-color: @dark2;
+  min-height: 1px;
+  margin: 4px;
 }
