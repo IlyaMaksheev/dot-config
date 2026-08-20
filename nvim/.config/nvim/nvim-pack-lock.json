@@ -52,10 +52,6 @@
       "rev": "154eb5ff5b96d0641307113fa385eaf0d36d9796",
       "src": "https://github.com/ellisonleao/gruvbox.nvim"
     },
-    "image.nvim": {
-      "rev": "88351f1f7d9dbae286e671ce3690a49660dd8a5c",
-      "src": "https://github.com/3rd/image.nvim"
-    },
     "indent-blankline.nvim": {
       "rev": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03",
       "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
