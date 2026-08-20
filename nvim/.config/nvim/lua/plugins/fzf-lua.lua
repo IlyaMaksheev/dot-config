@@ -6,7 +6,8 @@ vim.pack.add({
 local fzf = require("fzf-lua")
 
 fzf.setup({
-  fzf_colors = true
+  fzf_colors = true,
+  ui_select = true,
 })
 
 local keymap = vim.keymap
