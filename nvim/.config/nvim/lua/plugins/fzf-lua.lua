@@ -7,7 +7,7 @@ local fzf = require("fzf-lua")
 
 fzf.setup({
   fzf_colors = true,
-  ui_select = true,
+  ui_select = {},
 })
 
 local keymap = vim.keymap
