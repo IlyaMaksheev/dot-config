@@ -309,6 +309,11 @@ binds {
     Mod+M hotkey-overlay-title="Open the telegram" { spawn "env" "QT_QPA_PLATFORMTHEME=xdgdesktopportal" "QT_QPA_PLATFORMTHEME_QT6=xdgdesktopportal" "Telegram"; }
     Mod+D hotkey-overlay-title="Open the discord" { spawn "discord"; }
 
+    // Local Whisper dictation. Use an absolute path because the niri session PATH
+    // does not include ~/.local/bin.
+    Mod+Shift+D repeat=false hotkey-overlay-title="Toggle Whisper dictation" { spawn "/home/korvin/.local/bin/whisper-dictate" "toggle"; }
+    Mod+Shift+C repeat=false allow-inhibiting=false hotkey-overlay-title="Cancel Whisper dictation" { spawn "/home/korvin/.local/bin/whisper-dictate" "cancel"; }
+
     Alt+Space hotkey-overlay-title="Run an application selector" { spawn "rofi" "-show" "drun"; }
 
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
