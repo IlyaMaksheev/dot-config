@@ -8,6 +8,14 @@ local fzf = require("fzf-lua")
 fzf.setup({
   fzf_colors = true,
   ui_select = {},
+  keymap = {
+    builtin = {
+      ["<M-j>"] = "preview-page-down",
+      ["<M-k>"] = "preview-page-up",
+      ["<M-e>"] = "preview-down",
+      ["<M-y>"] = "preview-up",
+    },
+  },
 })
 
 local keymap = vim.keymap
