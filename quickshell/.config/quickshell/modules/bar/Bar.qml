@@ -1,5 +1,6 @@
 import Quickshell
 import QtQuick
+import "../../components"
 import "../../theme"
 
 Scope {
@@ -43,6 +44,12 @@ Scope {
 
                 Tray {}
                 ClockWidget {}
+
+                StyledText {
+                    text: "󰒓"
+
+                    font.pixelSize: 18
+                }
             }
 
             Rectangle {
