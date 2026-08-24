@@ -8,5 +8,5 @@ require("nvim-highlight-colors").setup({
   virtual_symbol = '',
   virtual_symbol_prefix = ' ',
   virtual_symbol_suffix = ' ',
-  exclude_filetypes = { "lazy" }
+  exclude_filetypes = { "lazy", "acwrite" }
 })
