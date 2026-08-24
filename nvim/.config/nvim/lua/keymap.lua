@@ -5,6 +5,7 @@ local yank_highlight = require("yank-highlight")
 
 keymap.set("n", "<leader>ol", vim.pack.update, { desc = "Open VimPack update" })
 keymap.set("n", "<leader>ot", "<cmd>terminal<CR>", { desc = "Open terminal" })
+keymap.set("n", "<leader>op", "<cmd>terminal pi<CR>", { desc = "Open PI" })
 
 keymap.set("n", "<leader>w", "<cmd>write<CR>", { desc = "Write file" })
 keymap.set("n", "<leader>W", "<cmd>write!<CR>", { desc = "Force write file" })
