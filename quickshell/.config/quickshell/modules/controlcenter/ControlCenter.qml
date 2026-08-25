@@ -42,6 +42,7 @@ Singleton {
         if (TrayMenuState.currentMenu)
             TrayMenuState.currentMenu.closeMenu();
 
+        OperationFailures.beginSession();
         root.targetOutput = output;
         root.isOpen = true;
         root.primingFocus = true;

@@ -1,3 +1,5 @@
+singleton Connectivity 1.0 Connectivity.qml
 singleton Niri 1.0 Niri.qml
+singleton OperationFailures 1.0 OperationFailures.qml
 singleton TrayMenuState 1.0 TrayMenuState.qml
 singleton Time 1.0 Time.qml

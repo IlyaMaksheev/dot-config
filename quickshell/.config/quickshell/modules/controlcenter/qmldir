@@ -1,2 +1,3 @@
 singleton ControlCenter 1.0 ControlCenter.qml
+ConnectivityControls 1.0 ConnectivityControls.qml
 ControlCenterContent 1.0 ControlCenterContent.qml

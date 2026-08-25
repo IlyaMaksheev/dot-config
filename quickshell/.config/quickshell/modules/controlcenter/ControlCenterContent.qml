@@ -117,15 +117,8 @@ Item {
 
     Component {
         id: quickComponent
-        Grid {
-            property bool effectiveVisible: true
-            property int preferredHeight: Appearance.controlCenterTileHeight * 2 + Appearance.controlCenterGap
-            property var moduleControls: [network, bluetooth, nightLight]
-            columns: 2; spacing: Appearance.controlCenterGap
-            QuickToggleTile { id: network; width: (parent.width - parent.spacing) / 2; title: "Network"; subtitle: "Unavailable"; icon: "󰤭"; enabled: false; navigable: true; accessibleStatus: subtitle; onHovered: root.adoptPointer(network) }
-            QuickToggleTile { id: bluetooth; width: (parent.width - parent.spacing) / 2; title: "Bluetooth"; subtitle: "Unavailable"; icon: "󰂲"; enabled: false; navigable: true; accessibleStatus: subtitle; onHovered: root.adoptPointer(bluetooth) }
-            QuickToggleTile { id: nightLight; width: (parent.width - parent.spacing) / 2; title: "Night Light"; subtitle: "Unavailable"; icon: "󰖔"; enabled: false; navigable: true; accessibleStatus: subtitle; onHovered: root.adoptPointer(nightLight) }
-            Item { width: (parent.width - parent.spacing) / 2; height: Appearance.controlCenterTileHeight }
+        ConnectivityControls {
+            adoptPointer: control => root.adoptPointer(control)
         }
     }
 
