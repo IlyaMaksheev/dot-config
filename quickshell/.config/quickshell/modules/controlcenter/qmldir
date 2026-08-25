@@ -2,4 +2,5 @@ singleton ControlCenter 1.0 ControlCenter.qml
 BrightnessControl 1.0 BrightnessControl.qml
 ConnectivityControls 1.0 ConnectivityControls.qml
 ControlCenterContent 1.0 ControlCenterContent.qml
+MediaControl 1.0 MediaControl.qml
 VolumeControl 1.0 VolumeControl.qml

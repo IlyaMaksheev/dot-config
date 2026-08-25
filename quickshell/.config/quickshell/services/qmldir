@@ -1,6 +1,7 @@
 singleton Audio 1.0 Audio.qml
 singleton Backlight 1.0 Backlight.qml
 singleton Connectivity 1.0 Connectivity.qml
+singleton Media 1.0 Media.qml
 singleton NightLight 1.0 NightLight.qml
 singleton Niri 1.0 Niri.qml
 singleton OperationFailures 1.0 OperationFailures.qml

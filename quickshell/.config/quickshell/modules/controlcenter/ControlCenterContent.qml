@@ -137,6 +137,6 @@ Item {
     }
     Component {
         id: mediaComponent
-        Item { property bool effectiveVisible: false; property int preferredHeight: Appearance.controlCenterMediaHeight; property var moduleControls: [] }
+        MediaControl { adoptPointer: control => root.adoptPointer(control) }
     }
 }
