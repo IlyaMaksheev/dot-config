@@ -130,7 +130,10 @@ Item {
     }
     Component {
         id: brightnessComponent
-        Item { property bool effectiveVisible: false; property int preferredHeight: Appearance.controlCenterSliderHeight; property var moduleControls: [] }
+        BrightnessControl {
+            panelVisible: root.panelVisible
+            adoptPointer: control => root.adoptPointer(control)
+        }
     }
     Component {
         id: mediaComponent
