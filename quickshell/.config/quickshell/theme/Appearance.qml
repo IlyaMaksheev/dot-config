@@ -15,6 +15,37 @@ Singleton {
     readonly property int menuHorizontalPadding: 10
     readonly property int menuMaxWidth: 420
     readonly property int controlCenterEdgeGap: 14
+    readonly property int controlCenterPadding: 14
+    readonly property int controlCenterMajorSpacing: 14
+    readonly property int controlCenterGap: 8
+    readonly property int controlCenterRowHeight: 40
+    readonly property int controlCenterHeaderHeight: 40
+    readonly property int controlCenterTileHeight: 72
+    readonly property int controlCenterSliderHeight: 40
+    readonly property int controlCenterMediaHeight: 112
+    readonly property int controlCenterRadius: 2
+    readonly property int controlCenterBorderWidth: 3
+    readonly property int controlCenterFocusWidth: 2
+    readonly property int feedbackDuration: 120
+    readonly property int structuralDuration: 150
+    // Qt exposes no dependable cross-desktop preference here yet. Feature behavior is
+    // nevertheless centralized so a runtime integration can replace this binding.
+    readonly property bool reducedMotion: false
+    readonly property int feedbackAnimationDuration: reducedMotion ? 0 : feedbackDuration
+    readonly property int structuralAnimationDuration: reducedMotion ? 0 : structuralDuration
+
+    readonly property color panelBackground: dark0_soft
+    readonly property color panelBorder: dark_green_hard
+    readonly property color surfaceBackground: dark1
+    readonly property color surfaceHover: dark2
+    readonly property color surfacePressed: dark0
+    readonly property color surfaceSelected: dark_green_soft
+    readonly property color focusColor: bright_green
+    readonly property color separatorColor: dark3
+    readonly property color textPrimary: light1
+    readonly property color textSecondary: light3
+    readonly property color disabledColor: gray
+    readonly property color destructiveColor: bright_red
 
     readonly property color dark0_hard: "#1d2021"
     readonly property color dark0: "#282828"

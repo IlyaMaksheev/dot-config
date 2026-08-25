@@ -4,8 +4,10 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import QtQuick
+import QtQuick.Controls
 import "../../services"
 import "../../theme"
+import "../../components"
 
 Singleton {
     id: root
@@ -130,17 +132,13 @@ Singleton {
                 onClicked: root.close()
             }
 
-            Rectangle {
+            PanelSurface {
                 id: panel
                 visible: overlay.ownsPanel
                 focus: overlay.ownsPanel
                 width: Math.max(0, Math.min(480, Math.max(360, overlay.width / 4), overlay.width - Appearance.controlCenterEdgeGap * 2))
                 height: Math.min(implicitHeight, Math.max(0, overlay.height - Appearance.barHeight - Appearance.controlCenterEdgeGap * 2))
-                implicitHeight: 160
-                color: Appearance.dark0_soft
-                border.width: 3
-                border.color: Appearance.dark_green_hard
-                radius: 2
+                implicitHeight: content.implicitHeight + Appearance.controlCenterPadding * 2
 
                 anchors {
                     top: parent.top
@@ -154,18 +152,41 @@ Singleton {
                     onClicked: mouse => mouse.accepted = true
                 }
 
-                Keys.onEscapePressed: event => {
-                    root.close();
-                    event.accepted = true;
+                Flickable {
+                    id: viewport
+                    anchors.fill: parent
+                    anchors.margins: Appearance.controlCenterBorderWidth
+                    contentWidth: width
+                    contentHeight: content.implicitHeight + Appearance.controlCenterPadding * 2
+                    clip: true
+                    boundsBehavior: Flickable.StopAtBounds
+                    flickableDirection: Flickable.VerticalFlick
+
+                    function reveal(item) {
+                        const point = item.mapToItem(content, 0, 0);
+                        if (point.y < contentY)
+                            contentY = Math.max(0, point.y - Appearance.controlCenterPadding);
+                        else if (point.y + item.height > contentY + height)
+                            contentY = Math.min(contentHeight - height, point.y + item.height - height + Appearance.controlCenterPadding);
+                    }
+
+                    ControlCenterContent {
+                        id: content
+                        x: Appearance.controlCenterPadding
+                        y: Appearance.controlCenterPadding
+                        width: viewport.width - Appearance.controlCenterPadding * 2
+                        ensureVisible: item => viewport.reveal(item)
+                        onCloseRequested: root.close()
+                    }
+
+                    ScrollBar.vertical: ScrollBar {
+                        policy: viewport.contentHeight > viewport.height && (viewport.moving || panelHover.containsMouse || content.cursorVisible)
+                            ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
+                        width: 3
+                    }
                 }
 
-                Text {
-                    anchors.centerIn: parent
-                    text: "Control Center"
-                    color: Appearance.light1
-                    font.family: Appearance.fontFamily
-                    font.pixelSize: Appearance.fontPixelSize
-                }
+                HoverHandler { id: panelHover }
             }
         }
     }

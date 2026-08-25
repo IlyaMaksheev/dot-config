@@ -1,3 +1,12 @@
+ControlSeparator 1.0 ControlSeparator.qml
+FocusIndicator 1.0 FocusIndicator.qml
+IconButton 1.0 IconButton.qml
+InteractionSurface 1.0 InteractionSurface.qml
+PanelSurface 1.0 PanelSurface.qml
+QuickToggleTile 1.0 QuickToggleTile.qml
+SectionHeader 1.0 SectionHeader.qml
+SquareSlider 1.0 SquareSlider.qml
+StatusPresentation 1.0 StatusPresentation.qml
 StyledMenu 1.0 StyledMenu.qml
 StyledText 1.0 StyledText.qml
 StyledTooltip 1.0 StyledTooltip.qml

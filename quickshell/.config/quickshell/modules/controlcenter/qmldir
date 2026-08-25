@@ -1,1 +1,2 @@
 singleton ControlCenter 1.0 ControlCenter.qml
+ControlCenterContent 1.0 ControlCenterContent.qml
