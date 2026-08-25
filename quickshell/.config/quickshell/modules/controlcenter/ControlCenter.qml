@@ -176,6 +176,7 @@ Singleton {
                         x: Appearance.controlCenterPadding
                         y: Appearance.controlCenterPadding
                         width: viewport.width - Appearance.controlCenterPadding * 2
+                        panelVisible: overlay.ownsPanel
                         ensureVisible: item => viewport.reveal(item)
                         onCloseRequested: root.close()
                     }

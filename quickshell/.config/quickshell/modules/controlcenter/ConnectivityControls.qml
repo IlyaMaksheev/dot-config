@@ -10,6 +10,19 @@ Grid {
     property int preferredHeight: Appearance.controlCenterTileHeight * 2 + Appearance.controlCenterGap
     property var moduleControls: [network, bluetooth, nightLight]
     property var adoptPointer: function(control) {}
+    property bool panelVisible: false
+
+    onPanelVisibleChanged: {
+        if (panelVisible)
+            NightLight.refresh();
+    }
+
+    Timer {
+        interval: 5000
+        repeat: true
+        running: root.panelVisible
+        onTriggered: NightLight.refresh()
+    }
 
     columns: 2
     spacing: Appearance.controlCenterGap
@@ -79,11 +92,16 @@ Grid {
         id: nightLight
         width: (parent.width - parent.spacing) / 2
         title: "Night Light"
-        subtitle: "Unavailable"
+        subtitle: !NightLight.available ? "wl-gammarelay unavailable"
+            : NightLight.togglePending ? "Changing…"
+            : NightLight.enabled ? "On · " + NightLight.temperature + " K"
+            : "Off · " + NightLight.temperature + " K"
         icon: "󰖔"
-        enabled: false
+        enabled: NightLight.available && !NightLight.togglePending
+        selected: NightLight.available && NightLight.enabled
         navigable: true
         accessibleStatus: subtitle
+        onActivated: NightLight.requestToggle()
         onHovered: root.adoptPointer(nightLight)
     }
 

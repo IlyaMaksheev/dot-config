@@ -9,6 +9,7 @@ Item {
     property bool cursorVisible: false
     property var navigableControls: []
     property var ensureVisible: function(item) {}
+    property bool panelVisible: false
     signal closeRequested()
 
     implicitHeight: content.height
@@ -118,6 +119,7 @@ Item {
     Component {
         id: quickComponent
         ConnectivityControls {
+            panelVisible: root.panelVisible
             adoptPointer: control => root.adoptPointer(control)
         }
     }
