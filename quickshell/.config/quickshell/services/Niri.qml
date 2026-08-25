@@ -2,6 +2,7 @@ pragma Singleton
 
 import Quickshell
 import Quickshell.Io
+import QtQuick
 
 Singleton {
     id: root
@@ -11,6 +12,9 @@ Singleton {
     property var _windows: []
     readonly property var windows: _windows
     property string pendingAction: ""
+    property bool logoutPending: false
+    signal logoutLaunched()
+    signal logoutLaunchFailed()
 
     function handleEvent(line) {
         try {
@@ -88,6 +92,15 @@ Singleton {
         return root._windows.find(window => window.id === workspace.active_window_id) ?? null;
     }
 
+    function logout() {
+        if (logoutPending)
+            return false;
+        logoutPending = true;
+        logoutProcess.running = true;
+        logoutLaunchCheck.restart();
+        return true;
+    }
+
     function focusWorkspace(id) {
         if (actionSocket.connected)
             return;
@@ -102,6 +115,35 @@ Singleton {
             }
         }) + "\n";
         actionSocket.connected = true;
+    }
+
+    Timer {
+        id: logoutLaunchCheck
+        interval: 0
+        onTriggered: {
+            if (!root.logoutPending)
+                return;
+            root.logoutPending = false;
+            if (logoutProcess.running)
+                root.logoutLaunched();
+            else
+                root.logoutLaunchFailed();
+        }
+    }
+
+    Process {
+        id: logoutProcess
+        command: ["niri", "msg", "action", "quit"]
+        onRunningChanged: {
+            if (running && root.logoutPending) {
+                root.logoutPending = false;
+                root.logoutLaunched();
+            }
+        }
+        onExited: (exitCode, exitStatus) => {
+            if (exitCode !== 0)
+                console.warn("Niri logout action exited unsuccessfully:", exitCode, exitStatus);
+        }
     }
 
     Socket {

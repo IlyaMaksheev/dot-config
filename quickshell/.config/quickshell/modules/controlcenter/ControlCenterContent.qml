@@ -10,6 +10,7 @@ Item {
     property var navigableControls: []
     property var ensureVisible: function(item) {}
     property bool panelVisible: false
+    property var powerControl: null
     signal closeRequested()
 
     implicitHeight: content.height
@@ -21,6 +22,13 @@ Item {
             if (!module.visible || !module.moduleControls)
                 continue;
             for (const control of module.moduleControls) {
+                if (control && !control.controlCenterActivationRegistered) {
+                    control.controlCenterActivationRegistered = true;
+                    control.activated.connect(function() {
+                        if (root.powerControl && !root.powerControl.isActionControl(control))
+                            root.powerControl.collapse();
+                    });
+                }
                 if (control && control.visible && (control.navigable || control.accessibleStatus))
                     controls.push(control);
             }
@@ -31,6 +39,8 @@ Item {
     }
 
     function moveCursor(delta) {
+        if (powerControl && powerControl.selectedAction !== "" && powerControl.cancelPending())
+            rebuildNavigation();
         rebuildNavigation();
         if (!navigableControls.length)
             return;
@@ -47,6 +57,8 @@ Item {
     }
 
     function adoptPointer(control) {
+        if (powerControl && powerControl.selectedAction !== "" && !powerControl.isSelectedControl(control))
+            powerControl.cancelPending();
         rebuildNavigation();
         const index = navigableControls.indexOf(control);
         if (index >= 0) {
@@ -70,7 +82,10 @@ Item {
     }
 
     Keys.onPressed: event => {
-        if (event.key === Qt.Key_Escape) closeRequested();
+        if (event.key === Qt.Key_Escape) {
+            if (!powerControl || !powerControl.cancelPending())
+                closeRequested();
+        }
         else if (event.key === Qt.Key_Tab) moveCursor(event.modifiers & Qt.ShiftModifier ? -1 : 1);
         else if (event.key === Qt.Key_Down || event.key === Qt.Key_J) moveCursor(1);
         else if (event.key === Qt.Key_Up || event.key === Qt.Key_K) moveCursor(-1);
@@ -100,19 +115,22 @@ Item {
                 visible: active && item && item.effectiveVisible
                 height: visible ? item.preferredHeight : 0
                 property var moduleControls: item ? item.moduleControls : []
-                onLoaded: root.rebuildNavigation()
+                onLoaded: {
+                    if (modelData === "header")
+                        root.powerControl = item;
+                    root.rebuildNavigation();
+                }
             }
         }
     }
 
     Component {
         id: headerComponent
-        Item {
-            property bool effectiveVisible: true
-            property int preferredHeight: Appearance.controlCenterHeaderHeight
-            property var moduleControls: [powerButton]
-            IconButton { id: powerButton; anchors.right: parent.right; icon: "󰐥"; accessibleStatus: "Power actions"; onHovered: root.adoptPointer(powerButton) }
-            SectionHeader { anchors.left: parent.left; anchors.verticalCenter: parent.verticalCenter; text: "Control Center" }
+        PowerControl {
+            panelVisible: root.panelVisible
+            adoptPointer: control => root.adoptPointer(control)
+            onNavigationChanged: root.rebuildNavigation()
+            onCloseRequested: root.closeRequested()
         }
     }
 

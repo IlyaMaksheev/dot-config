@@ -8,6 +8,7 @@ Rectangle {
     property bool destructive: false
     property bool navigable: enabled
     property string accessibleStatus: ""
+    property bool controlCenterActivationRegistered: false
     signal activated()
     signal hovered()
 

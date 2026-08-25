@@ -3,4 +3,5 @@ BrightnessControl 1.0 BrightnessControl.qml
 ConnectivityControls 1.0 ConnectivityControls.qml
 ControlCenterContent 1.0 ControlCenterContent.qml
 MediaControl 1.0 MediaControl.qml
+PowerControl 1.0 PowerControl.qml
 VolumeControl 1.0 VolumeControl.qml
