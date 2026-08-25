@@ -126,7 +126,7 @@ Item {
 
     Component {
         id: volumeComponent
-        SquareSlider { id: volumeControl; property bool effectiveVisible: true; property int preferredHeight: Appearance.controlCenterSliderHeight; property var moduleControls: [volumeControl]; label: "󰕾  Volume unavailable"; enabled: false; navigable: true; accessibleStatus: "Volume unavailable"; onHovered: root.adoptPointer(volumeControl) }
+        VolumeControl { adoptPointer: control => root.adoptPointer(control) }
     }
     Component {
         id: brightnessComponent

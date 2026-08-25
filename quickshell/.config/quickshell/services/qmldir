@@ -1,3 +1,4 @@
+singleton Audio 1.0 Audio.qml
 singleton Connectivity 1.0 Connectivity.qml
 singleton NightLight 1.0 NightLight.qml
 singleton Niri 1.0 Niri.qml
