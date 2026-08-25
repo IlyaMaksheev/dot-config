@@ -234,3 +234,13 @@ vim.keymap.set(
   end,
   { desc = "Copy neovim server filename" }
 )
+
+vim.keymap.set("n", "<A-h>", "<cmd>wincmd h<CR>")
+vim.keymap.set("n", "<A-j>", "<cmd>wincmd j<CR>")
+vim.keymap.set("n", "<A-k>", "<cmd>wincmd k<CR>")
+vim.keymap.set("n", "<A-l>", "<cmd>wincmd l<CR>")
+
+vim.keymap.set("n", "<A-Left>", "<cmd>vertical resize -5<CR>")
+vim.keymap.set("n", "<A-Down>", "<cmd>resize +5<CR>")
+vim.keymap.set("n", "<A-Up>", "<cmd>resize -5<CR>")
+vim.keymap.set("n", "<A-Right>", "<cmd>vertical resize +5<CR>")

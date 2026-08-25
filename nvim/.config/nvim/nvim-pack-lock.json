@@ -109,10 +109,6 @@
       "rev": "4663eb3ecd538bd5062628fb6d95bbe6bdca78f6",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
-    "smart-splits.nvim": {
-      "rev": "5e92431aa7f5e618c2f6825f682df6d94f6e0a02",
-      "src": "https://github.com/mrjones2014/smart-splits.nvim"
-    },
     "snacks.nvim": {
       "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
       "src": "https://github.com/folke/snacks.nvim"
