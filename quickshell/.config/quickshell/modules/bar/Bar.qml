@@ -42,6 +42,9 @@ Scope {
                 }
 
                 Tray {}
+                ControlCenterTrigger {
+                    outputName: modelData.name
+                }
                 ClockWidget {}
             }
 

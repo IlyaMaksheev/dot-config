@@ -19,7 +19,7 @@ Singleton {
             if (event.WorkspacesChanged)
                 root._workspaces = event.WorkspacesChanged.workspaces;
             else if (event.WorkspaceActivated)
-                root.activateWorkspace(event.WorkspaceActivated.id);
+                root.activateWorkspace(event.WorkspaceActivated.id, event.WorkspaceActivated.focused);
             else if (event.WorkspaceActiveWindowChanged)
                 root.setWorkspaceActiveWindow(event.WorkspaceActiveWindowChanged.workspace_id, event.WorkspaceActiveWindowChanged.active_window_id);
             else if (event.WindowsChanged)
@@ -33,20 +33,28 @@ Singleton {
         }
     }
 
-    function activateWorkspace(id) {
+    function activateWorkspace(id, focused) {
         const activated = root._workspaces.find(workspace => workspace.id === id);
 
         if (!activated)
             return;
 
         root._workspaces = root._workspaces.map(workspace => {
-            if (workspace.output !== activated.output)
-                return workspace;
+            const changes = {};
 
-            return Object.assign({}, workspace, {
-                is_active: workspace.id === id
-            });
+            if (workspace.output === activated.output)
+                changes.is_active = workspace.id === id;
+
+            if (focused)
+                changes.is_focused = workspace.id === id;
+
+            return Object.keys(changes).length > 0 ? Object.assign({}, workspace, changes) : workspace;
         });
+    }
+
+    function focusedOutputName() {
+        const workspace = root._workspaces.find(workspace => workspace.is_focused);
+        return workspace ? workspace.output : "";
     }
 
     function setWorkspaceActiveWindow(workspaceId, windowId) {

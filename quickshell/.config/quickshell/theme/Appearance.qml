@@ -14,6 +14,7 @@ Singleton {
     readonly property int menuItemHeight: 32
     readonly property int menuHorizontalPadding: 10
     readonly property int menuMaxWidth: 420
+    readonly property int controlCenterEdgeGap: 14
 
     readonly property color dark0_hard: "#1d2021"
     readonly property color dark0: "#282828"
