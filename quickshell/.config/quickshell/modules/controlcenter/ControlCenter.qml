@@ -39,8 +39,7 @@ Singleton {
             return;
         }
 
-        if (TrayMenuState.currentMenu)
-            TrayMenuState.currentMenu.closeMenu();
+        PopupCoordinator.activate(root);
 
         OperationFailures.beginSession();
         root.targetOutput = output;
@@ -50,7 +49,10 @@ Singleton {
     function close() {
         root.isOpen = false;
         root.targetOutput = "";
+        PopupCoordinator.release(root);
     }
+
+    Component.onDestruction: PopupCoordinator.release(root)
 
     function toggle(outputName) {
         if (root.isOpen) {
@@ -67,14 +69,6 @@ Singleton {
         running: root.isOpen
         onTriggered: {
             if (!root.screenForOutput(root.targetOutput))
-                root.close();
-        }
-    }
-
-    Connections {
-        target: TrayMenuState
-        function onCurrentMenuChanged() {
-            if (root.isOpen && TrayMenuState.currentMenu)
                 root.close();
         }
     }

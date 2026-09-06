@@ -26,6 +26,19 @@ Row {
                 return title || description || "";
             }
 
+            // Only this root adapter participates; nested menus remain menu-owned.
+            function openMenu() {
+                PopupCoordinator.activate(trayItem);
+                menuPopup.openMenu();
+            }
+
+            function close() {
+                menuPopup.closeMenu();
+                PopupCoordinator.release(trayItem);
+            }
+
+            Component.onDestruction: PopupCoordinator.release(trayItem)
+
             width: Appearance.trayIconSize + Appearance.trayItemHorizontalPadding * 2
             height: Appearance.barHeight
 
@@ -64,8 +77,8 @@ Row {
                 menuHandle: trayItem.modelData.menu
                 anchorItem: trayItem
 
-                onActionTriggered: TrayMenuState.currentMenu?.closeMenu()
-                onDismissed: TrayMenuState.closed(menuPopup)
+                onActionTriggered: trayItem.close()
+                onDismissed: PopupCoordinator.release(trayItem)
             }
 
             MouseArea {
@@ -79,9 +92,9 @@ Row {
                         trayItem.modelData.secondaryActivate();
                     } else if (mouse.button === Qt.RightButton) {
                         if (trayItem.modelData.hasMenu)
-                            TrayMenuState.open(menuPopup);
+                            trayItem.openMenu();
                     } else if (trayItem.modelData.onlyMenu && trayItem.modelData.hasMenu) {
-                        TrayMenuState.open(menuPopup);
+                        trayItem.openMenu();
                     } else {
                         trayItem.modelData.activate();
                     }

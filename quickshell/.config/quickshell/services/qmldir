@@ -6,5 +6,5 @@ singleton NightLight 1.0 NightLight.qml
 singleton Niri 1.0 Niri.qml
 singleton OperationFailures 1.0 OperationFailures.qml
 singleton Power 1.0 Power.qml
-singleton TrayMenuState 1.0 TrayMenuState.qml
+singleton PopupCoordinator 1.0 PopupCoordinator.qml
 singleton Time 1.0 Time.qml
