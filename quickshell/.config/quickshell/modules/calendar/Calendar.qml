@@ -79,9 +79,9 @@ Singleton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 y: Math.min(overlay.height, Appearance.barHeight + Appearance.calendarEdgeGap)
                 width: Math.max(0, Math.min(root.mode === "year" ? Appearance.calendarYearWidth : Appearance.calendarMonthWidth, overlay.width - Appearance.calendarEdgeGap * 2))
-                height: Math.max(0, Math.min(content.implicitHeight + Appearance.calendarPadding * 2, overlay.height - y - Appearance.calendarEdgeGap))
+                height: Math.max(0, Math.min(header.height + content.implicitHeight + Appearance.calendarPadding * 2, overlay.height - y - Appearance.calendarEdgeGap))
                 color: Appearance.dark0
-                border.color: Appearance.panelBorder
+                border.color: activeFocus ? Appearance.focusColor : Appearance.panelBorder
                 border.width: Appearance.calendarBorderWidth
                 clip: true
                 Keys.onPressed: event => {
@@ -104,10 +104,23 @@ Singleton {
                         wheel.accepted = true;
                     }
                 }
+                // Navigation stays outside the panning surface: it must remain
+                // clickable and visible even when a constrained year view scrolls.
+                Row {
+                    id: header
+                    x: Appearance.calendarPadding
+                    y: Appearance.calendarPadding
+                    CalendarButton { text: '‹'; onClicked: root.step(-1) }
+                    CalendarButton { text: 'Today'; onClicked: root.today() }
+                    CalendarButton { text: 'Month'; border.width: root.mode === 'month' ? 1 : 0; border.color: Appearance.panelBorder; onClicked: root.mode = 'month' }
+                    CalendarButton { text: 'Year'; border.width: root.mode === 'year' ? 1 : 0; border.color: Appearance.panelBorder; onClicked: root.mode = 'year' }
+                    CalendarButton { text: '›'; onClicked: root.step(1) }
+                }
                 Flickable {
                     id: viewport
                     anchors.fill: parent
                     anchors.margins: Appearance.calendarPadding
+                    anchors.topMargin: Appearance.calendarPadding + header.height
                     clip: true
                     contentWidth: content.width
                     contentHeight: content.implicitHeight
@@ -131,13 +144,6 @@ Singleton {
                     Column {
                     id: content
                     width: (root.mode === "year" ? Appearance.calendarYearWidth : Appearance.calendarMonthWidth) - Appearance.calendarPadding * 2
-                    Row {
-                        CalendarButton { text: '‹'; onClicked: root.step(-1) }
-                        CalendarButton { text: 'Today'; onClicked: root.today() }
-                        CalendarButton { text: 'Month'; border.width: root.mode === 'month' ? 1 : 0; border.color: Appearance.panelBorder; onClicked: root.mode = 'month' }
-                        CalendarButton { text: 'Year'; border.width: root.mode === 'year' ? 1 : 0; border.color: Appearance.panelBorder; onClicked: root.mode = 'year' }
-                        CalendarButton { text: '›'; onClicked: root.step(1) }
-                    }
                     Text {
                         width: parent.width
                         height: Appearance.calendarCellHeight

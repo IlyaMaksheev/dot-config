@@ -16,7 +16,7 @@ Singleton {
     readonly property int calendarCellHeight: 28
     readonly property int calendarPadding: 10
     readonly property int calendarEdgeGap: 8
-    readonly property int calendarBorderWidth: 2
+    readonly property int calendarBorderWidth: controlCenterBorderWidth
     readonly property int calendarMonthWidth: 360
     readonly property int calendarMiniMonthWidth: 304
     readonly property int calendarYearGap: 12

@@ -19,7 +19,11 @@ Rectangle {
     MouseArea {
         id: mouse
         anchors.fill: parent
+        acceptedButtons: Qt.LeftButton
         hoverEnabled: true
+        // Keep controls authoritative once pressed: the surrounding Flickable must
+        // not steal the grab and cancel short clicks that include slight movement.
+        preventStealing: true
         onClicked: root.clicked()
     }
 }
