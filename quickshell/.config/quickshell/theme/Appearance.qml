@@ -11,6 +11,13 @@ Singleton {
     readonly property int workspaceHorizontalPadding: 10
     readonly property int trayIconSize: 27
     readonly property int trayItemHorizontalPadding: 10
+    readonly property string calendarFontFamily: "JetBrainsMono Nerd Font Mono"
+    readonly property int calendarFontSize: 15
+    readonly property int calendarCellHeight: 28
+    readonly property int calendarPadding: 10
+    readonly property int calendarEdgeGap: 8
+    readonly property int calendarBorderWidth: 2
+    readonly property int calendarMonthWidth: 360
     readonly property int clockHorizontalPadding: 10
     readonly property color clockHoverBackground: dark2
     readonly property color clockHoverAccent: faded_green

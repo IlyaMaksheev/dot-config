@@ -1,0 +1,3 @@
+singleton Calendar 1.0 Calendar.qml
+MonthGrid 1.0 MonthGrid.qml
+CalendarButton 1.0 CalendarButton.qml

@@ -2,9 +2,13 @@ import QtQuick
 import "../../components"
 import "../../services"
 import "../../theme"
+import "../calendar"
 
 MouseArea {
     id: root
+    required property string outputName
+    acceptedButtons: Qt.LeftButton
+    onClicked: Calendar.toggle(outputName)
 
     implicitWidth: label.implicitWidth + Appearance.clockHorizontalPadding * 2
     implicitHeight: Appearance.barHeight
