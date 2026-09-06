@@ -35,6 +35,8 @@ Scope {
             }
 
             Row {
+                // Full-height module accents must remain above the bar's baseline accent.
+                z: 1
                 spacing: 4
                 anchors {
                     right: parent.right

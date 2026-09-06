@@ -11,6 +11,9 @@ Singleton {
     readonly property int workspaceHorizontalPadding: 10
     readonly property int trayIconSize: 27
     readonly property int trayItemHorizontalPadding: 10
+    readonly property int clockHorizontalPadding: 10
+    readonly property color clockHoverBackground: dark2
+    readonly property color clockHoverAccent: faded_green
     readonly property int menuItemHeight: 32
     readonly property int menuHorizontalPadding: 10
     readonly property int menuMaxWidth: 420
