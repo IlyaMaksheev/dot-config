@@ -232,7 +232,7 @@ layout {
 spawn-at-startup "wl-gammarelay-rs"
 spawn-at-startup "waybar"
 spawn-at-startup "swaync"
-spawn-at-startup "xwayland-satellite" 
+// Removed: Niri 26.04 manages xwayland-satellite itself
 
 environment {
   // Use KDE's Qt platform integration so KDE applications load kdeglobals,
