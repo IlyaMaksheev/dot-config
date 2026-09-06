@@ -33,3 +33,24 @@ for (const [y,m,d,wy,w] of [[2021,1,1,2020,53],[2021,1,4,2021,1],[2018,12,31,201
     assert.equal(model.isoWeek(y,m,d).week, w);
 }
 console.log('Calendar model: all assertions passed (384 month grids)');
+
+assert.equal(model.stepPeriod(2024, 2, 'year', 1).key, '2025-02-01');
+assert.equal(model.stepPeriod(2024, 2, 'year', -1).key, '2023-02-01');
+assert.equal(model.stepPeriod(2024, 12, 'month', 1).key, '2025-01-01');
+assert.equal(model.stepPeriod(2024, 1, 'month', -1).key, '2023-12-01');
+for (const year of [1900, 2000, 2023, 2024, 2025]) {
+    const months = model.yearMonths(year);
+    assert.equal(months.length, 12);
+    months.forEach((month, index) => {
+        assert.equal(month.year, year);
+        assert.equal(month.month, index + 1);
+        assert.equal(month.day, 1);
+        assert.equal(month.key, model.identity(year, index + 1, 1));
+        const days = model.monthGrid(month.year, month.month).flatMap(row => row.days).filter(day => day.inMonth);
+        assert.equal(days.length, model.daysInMonth(year, index + 1));
+    });
+    const february = months[1];
+    assert.equal(model.monthGrid(february.year, february.month).flatMap(row => row.days).filter(day => day.inMonth).length,
+        year === 2000 || year === 2024 ? 29 : 28);
+}
+console.log('Year model: stepping, mode periods, leap February and twelve drill-down identities passed');

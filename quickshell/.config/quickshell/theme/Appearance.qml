@@ -18,6 +18,9 @@ Singleton {
     readonly property int calendarEdgeGap: 8
     readonly property int calendarBorderWidth: 2
     readonly property int calendarMonthWidth: 360
+    readonly property int calendarMiniMonthWidth: 304
+    readonly property int calendarYearGap: 12
+    readonly property int calendarYearWidth: calendarMiniMonthWidth * 3 + calendarYearGap * 2 + calendarPadding * 2
     readonly property int clockHorizontalPadding: 10
     readonly property color clockHoverBackground: dark2
     readonly property color clockHoverAccent: faded_green

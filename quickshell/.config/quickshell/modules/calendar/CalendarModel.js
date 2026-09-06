@@ -35,3 +35,12 @@ function monthGrid(year, month) {
     }
     return rows;
 }
+
+function stepPeriod(year, month, mode, delta) {
+    return stepMonth(year, month, mode === 'year' ? delta * 12 : delta);
+}
+function yearMonths(year) {
+    var months = [];
+    for (var month = 1; month <= 12; month++) months.push(civil(date(year, month, 1)));
+    return months;
+}
