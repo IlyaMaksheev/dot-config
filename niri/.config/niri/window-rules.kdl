@@ -18,12 +18,6 @@ window-rule {
 }
 
 window-rule {
-    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
-    default-floating-position x=10 y=10 relative-to="bottom-right"
-    open-focused false
-}
-
-window-rule {
     match app-id=r#"^org\.telegram\.desktop$"# title="^Media viewer$"
     open-fullscreen false
     open-floating true
@@ -51,21 +45,23 @@ window-rule {
     match app-id=r#"^zen$"#
     match app-id=r#"^org\.telegram\.desktop$"# 
     match app-id=r#"^discord$"# 
-    match app-id="steam"
+    match app-id="steam" title=r#"^Steam$"#
 
     exclude app-id=r#"^org\.telegram\.desktop$"# title="Media viewer"
-    exclude app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
 
     open-maximized true
     open-maximized-to-edges false
 }
 
+// Every Steam-owned window except the main client. Floating windows without
+// an explicit default-floating-position open centered.
 window-rule {
-    match app-id="steam" title=r#"^Friends List$"#
+    match app-id="steam"
+    exclude title=r#"^Steam$"#
 
     open-floating true
-
-    default-floating-position x=10 y=10 relative-to="bottom-right"
+    default-column-width { proportion 0.333333; }
+    default-window-height { proportion 0.333333; }
 }
 
 window-rule {
