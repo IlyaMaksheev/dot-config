@@ -8,19 +8,29 @@ Item {
     property bool effectiveVisible: true
     property int preferredHeight: Appearance.controlCenterSliderHeight
     property var moduleControls: [slider, muteButton]
+    readonly property var primaryControl: slider
     property var adoptPointer: function(control) {}
 
     SquareSlider {
         id: slider
         anchors.left: parent.left
         anchors.right: muteButton.left
-        anchors.rightMargin: Appearance.controlCenterControlGap
+        anchors.rightMargin: Appearance.controlCenterGap
         height: parent.height
         value: Audio.available ? Audio.volume : 0
         enabled: Audio.available
         navigable: true
-        accessibleStatus: Audio.available ? "Output volume " + Math.round(Audio.volume * 100) + " percent" : "Volume unavailable"
-        label: Audio.available ? "󰕾  " + Math.round(Audio.volume * 100) + "%" : "󰕾  Volume unavailable"
+        adjustmentMode: false
+        navigationRight: muteButton
+        accessibleStatus: Audio.available
+            ? "Output volume " + Math.round(Audio.volume * 100) + " percent"
+                + (slider.adjustmentMode ? "; adjustment mode, h and l change volume, Escape exits" : "; Enter or Space to adjust")
+            : "Volume unavailable"
+        label: Audio.available
+            ? "󰕾  " + Math.round(Audio.volume * 100) + "%" + (slider.adjustmentMode ? "  [adjust]" : "")
+            : "󰕾  Volume unavailable"
+        onActivated: slider.adjustmentMode = !slider.adjustmentMode
+        onEnabledChanged: if (!enabled) adjustmentMode = false
         onValueRequested: value => Audio.requestVolume(value)
         onHovered: root.adoptPointer(slider)
     }
@@ -33,6 +43,7 @@ Item {
         enabled: Audio.available
         selected: Audio.available && Audio.muted
         navigable: true
+        navigationLeft: slider
         accessibleStatus: !Audio.available ? "Mute unavailable" : Audio.muted ? "Output muted" : "Output unmuted"
         onActivated: Audio.requestMuteToggle()
         onHovered: root.adoptPointer(muteButton)

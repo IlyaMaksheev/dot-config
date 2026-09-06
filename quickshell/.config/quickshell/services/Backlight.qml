@@ -158,8 +158,8 @@ Singleton {
                 OperationFailures.report("backlight-write", "Brightness change failed", "The selected internal backlight did not accept the requested brightness.");
             // Confirm against the same device even after failure; selection changes only on discovery.
             root.refreshPending = true;
-            root.readProcess.command = ["brightnessctl", "--class=backlight", "--device=" + root.readDevice, "--machine-readable", "info"];
-            root.readProcess.running = true;
+            readProcess.command = ["brightnessctl", "--class=backlight", "--device=" + root.readDevice, "--machine-readable", "info"];
+            readProcess.running = true;
         }
     }
     Timer { interval: 2500; running: root.panelVisible; repeat: true; onTriggered: root.refresh() }

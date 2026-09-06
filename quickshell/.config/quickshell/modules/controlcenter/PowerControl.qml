@@ -12,7 +12,10 @@ Item {
     property bool expanded: false
     property string selectedAction: ""
     property bool launchPending: false
-    property var moduleControls: [logoutButton, sleepButton, rebootButton, shutdownButton, powerButton]
+    property var moduleControls: expanded
+        ? [logoutButton, sleepButton, rebootButton, shutdownButton, powerButton]
+        : [powerButton]
+    readonly property var primaryControl: powerButton
     property var adoptPointer: function(control) {}
     signal closeRequested()
     signal navigationChanged()
@@ -21,11 +24,34 @@ Item {
         return control === logoutButton || control === sleepButton || control === rebootButton || control === shutdownButton || control === powerButton;
     }
 
+    function isExpandedActionControl(control) {
+        return expanded && isActionControl(control);
+    }
+
     function isSelectedControl(control) {
         return (selectedAction === "logout" && control === logoutButton)
             || (selectedAction === "hybrid-sleep" && control === sleepButton)
             || (selectedAction === "reboot" && control === rebootButton)
             || (selectedAction === "shutdown" && control === shutdownButton);
+    }
+
+    function actionName(action) {
+        switch (action) {
+        case "logout": return "Log out";
+        case "hybrid-sleep": return "Hybrid sleep";
+        case "reboot": return "Reboot";
+        case "shutdown": return "Shut down";
+        default: return "Power actions";
+        }
+    }
+
+    function focusedAction() {
+        if (selectedAction) return selectedAction;
+        if (logoutButton.cursorActive) return "logout";
+        if (sleepButton.cursorActive) return "hybrid-sleep";
+        if (rebootButton.cursorActive) return "reboot";
+        if (shutdownButton.cursorActive) return "shutdown";
+        return "";
     }
 
     function activate(action) {
@@ -40,9 +66,18 @@ Item {
             return false;
         selectionDelay.stop();
         selectedAction = "";
-        expanded = false;
         navigationChanged();
         return true;
+    }
+
+    function escapePowerState() {
+        if (cancelPending()) return true;
+        if (expanded && !launchPending) {
+            expanded = false;
+            navigationChanged();
+            return true;
+        }
+        return false;
     }
 
     function collapse() {
@@ -116,7 +151,10 @@ Item {
     SectionHeader {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        text: "Control Center"
+        width: Math.max(0, actionViewport.x - Appearance.controlCenterGap)
+        text: root.expanded && root.focusedAction()
+            ? root.actionName(root.focusedAction()) + (root.selectedAction ? " selected · Esc cancels" : "")
+            : "Control Center"
     }
 
     Item {
@@ -129,7 +167,7 @@ Item {
         clip: true
         opacity: root.expanded ? 1 : 0
 
-        Behavior on width { NumberAnimation { duration: Appearance.structuralAnimationDuration; easing.type: Easing.OutCubic } }
+        Behavior on width { NumberAnimation { duration: Appearance.structuralAnimationDuration; easing.type: root.expanded ? Easing.OutCubic : Easing.InCubic } }
         Behavior on opacity { NumberAnimation { duration: Appearance.structuralAnimationDuration } }
 
         Row {
@@ -139,8 +177,10 @@ Item {
 
             IconButton {
                 id: logoutButton
-                visible: root.expanded
-                enabled: !root.launchPending && root.selectedAction === ""
+                navigationRight: sleepButton
+                enabled: root.expanded && !root.launchPending
+                showFocusIndicator: false
+                selected: root.selectedAction === "logout"
                 icon: root.selectedAction === "logout" ? "󰍃 ✓" : "󰍃"
                 accessibleStatus: root.selectedAction === "logout" ? "Logout selected; Escape cancels" : "Log out"
                 onActivated: root.activate("logout")
@@ -148,8 +188,11 @@ Item {
             }
             IconButton {
                 id: sleepButton
-                visible: root.expanded
-                enabled: !root.launchPending && root.selectedAction === ""
+                navigationLeft: logoutButton
+                navigationRight: rebootButton
+                enabled: root.expanded && !root.launchPending
+                showFocusIndicator: false
+                selected: root.selectedAction === "hybrid-sleep"
                 icon: root.selectedAction === "hybrid-sleep" ? "󰒲 ✓" : "󰒲"
                 accessibleStatus: root.selectedAction === "hybrid-sleep" ? "Hybrid sleep selected; Escape cancels" : "Hybrid sleep"
                 onActivated: root.activate("hybrid-sleep")
@@ -157,9 +200,12 @@ Item {
             }
             IconButton {
                 id: rebootButton
-                visible: root.expanded
-                enabled: !root.launchPending && root.selectedAction === ""
+                navigationLeft: sleepButton
+                navigationRight: shutdownButton
+                enabled: root.expanded && !root.launchPending
+                showFocusIndicator: false
                 destructive: true
+                selected: root.selectedAction === "reboot"
                 icon: root.selectedAction === "reboot" ? "󰜉 ✓" : "󰜉"
                 accessibleStatus: root.selectedAction === "reboot" ? "Reboot selected; Escape cancels" : "Reboot"
                 onActivated: root.activate("reboot")
@@ -167,9 +213,12 @@ Item {
             }
             IconButton {
                 id: shutdownButton
-                visible: root.expanded
-                enabled: !root.launchPending && root.selectedAction === ""
+                navigationLeft: rebootButton
+                navigationRight: powerButton
+                enabled: root.expanded && !root.launchPending
+                showFocusIndicator: false
                 destructive: true
+                selected: root.selectedAction === "shutdown"
                 icon: root.selectedAction === "shutdown" ? "󰐥 ✓" : "󰐥"
                 accessibleStatus: root.selectedAction === "shutdown" ? "Shutdown selected; Escape cancels" : "Shut down"
                 onActivated: root.activate("shutdown")
@@ -183,8 +232,10 @@ Item {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         icon: root.expanded ? "󰅖" : "󰐥"
+        navigationLeft: root.expanded ? shutdownButton : null
         accessibleStatus: root.expanded ? "Collapse power actions" : "Expand power actions"
         enabled: !root.launchPending && root.selectedAction === ""
+        showFocusIndicator: !root.expanded
         onActivated: {
             root.expanded = !root.expanded;
             root.navigationChanged();

@@ -48,8 +48,8 @@ Singleton {
             return;
         }
         const confirmed = requestKind === "volume"
-            ? Math.abs(volume - requestedVolume) < 0.005
-            : muted === requestedMuted;
+            ? audio !== null && Math.abs(Math.max(0, Math.min(1, audio.volume)) - requestedVolume) < 0.005
+            : audio !== null && audio.muted === requestedMuted;
         if (confirmed) {
             requestPending = false;
             confirmation.stop();
@@ -79,11 +79,12 @@ Singleton {
         id: confirmation
         interval: 1200
         onTriggered: {
-            if (root.requestPending) {
-                const kind = root.requestKind;
-                root.requestPending = false;
-                OperationFailures.report("audio-" + kind, "Audio change failed", "The default output did not confirm the requested " + kind + " change.");
-            }
+            root.reconcile();
+            if (!root.requestPending)
+                return;
+            const kind = root.requestKind;
+            root.requestPending = false;
+            OperationFailures.report("audio-" + kind, "Audio change failed", "The default output did not confirm the requested " + kind + " change.");
         }
     }
 }

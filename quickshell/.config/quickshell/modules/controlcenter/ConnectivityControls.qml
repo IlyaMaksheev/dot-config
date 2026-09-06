@@ -9,6 +9,9 @@ Grid {
     property bool effectiveVisible: true
     property int preferredHeight: Appearance.controlCenterTileHeight * 2 + Appearance.controlCenterGap
     property var moduleControls: [network, bluetooth, nightLight]
+    readonly property var primaryControl: network
+    readonly property var exitControl: nightLight
+    readonly property var topControls: [network, bluetooth]
     property var adoptPointer: function(control) {}
     property bool panelVisible: false
 
@@ -70,6 +73,8 @@ Grid {
         selected: Connectivity.wifiEnabled && Connectivity.wifiHardwareAvailable
         navigable: true
         accessibleStatus: subtitle
+        navigationRight: bluetooth
+        navigationDown: nightLight
         onActivated: Connectivity.requestWifiToggle()
         onHovered: root.adoptPointer(network)
     }
@@ -84,6 +89,8 @@ Grid {
         selected: Connectivity.bluetoothState === BluetoothAdapterState.Enabled
         navigable: true
         accessibleStatus: subtitle
+        navigationLeft: network
+        navigationDown: nightLight
         onActivated: Connectivity.requestBluetoothToggle()
         onHovered: root.adoptPointer(bluetooth)
     }
@@ -101,6 +108,7 @@ Grid {
         selected: NightLight.available && NightLight.enabled
         navigable: true
         accessibleStatus: subtitle
+        navigationUp: network
         onActivated: NightLight.requestToggle()
         onHovered: root.adoptPointer(nightLight)
     }

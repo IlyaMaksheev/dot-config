@@ -1,4 +1,5 @@
 pragma Singleton
+pragma ComponentBehavior: Bound
 
 import Quickshell
 import Quickshell.Io
@@ -14,7 +15,6 @@ Singleton {
 
     property string targetOutput: ""
     property bool isOpen: false
-    property bool primingFocus: false
 
     function screenForOutput(outputName) {
         if (!outputName)
@@ -45,13 +45,9 @@ Singleton {
         OperationFailures.beginSession();
         root.targetOutput = output;
         root.isOpen = true;
-        root.primingFocus = true;
-        focusPrime.restart();
     }
 
     function close() {
-        focusPrime.stop();
-        root.primingFocus = false;
         root.isOpen = false;
         root.targetOutput = "";
     }
@@ -63,12 +59,6 @@ Singleton {
         }
 
         root.open(outputName);
-    }
-
-    Timer {
-        id: focusPrime
-        interval: 80
-        onTriggered: root.primingFocus = false
     }
 
     Timer {
@@ -113,6 +103,11 @@ Singleton {
             required property var modelData
             readonly property bool ownsPanel: root.isOpen && root.targetOutput === modelData.name
 
+            onOwnsPanelChanged: {
+                if (ownsPanel)
+                    Qt.callLater(() => content.forceActiveFocus(Qt.PopupFocusReason));
+            }
+
             screen: modelData
             visible: root.isOpen
             color: "transparent"
@@ -124,9 +119,11 @@ Singleton {
                 bottom: true
             }
             WlrLayershell.layer: WlrLayer.Overlay
+            // The owner holds keyboard focus. Other output overlays remain pointer-focusable
+            // so their first outside click is delivered instead of only transferring Niri focus.
             WlrLayershell.keyboardFocus: ownsPanel
-                ? (root.primingFocus ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.OnDemand)
-                : WlrKeyboardFocus.None
+                ? WlrKeyboardFocus.Exclusive
+                : root.isOpen ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
             MouseArea {
                 anchors.fill: parent
@@ -137,9 +134,11 @@ Singleton {
                 id: panel
                 visible: overlay.ownsPanel
                 focus: overlay.ownsPanel
+                focused: overlay.ownsPanel && content.activeFocus
                 width: Math.max(0, Math.min(480, Math.max(360, overlay.width / 4), overlay.width - Appearance.controlCenterEdgeGap * 2))
-                height: Math.min(implicitHeight, Math.max(0, overlay.height - Appearance.barHeight - Appearance.controlCenterEdgeGap * 2))
-                implicitHeight: content.implicitHeight + Appearance.controlCenterPadding * 2
+                readonly property real availableHeight: Math.max(0, overlay.height - Appearance.barHeight - Appearance.controlCenterEdgeGap * 2)
+                height: Math.min(implicitHeight, availableHeight)
+                implicitHeight: content.implicitHeight + Appearance.controlCenterPadding * 2 + Appearance.controlCenterBorderWidth * 2
 
                 anchors {
                     top: parent.top
@@ -182,13 +181,24 @@ Singleton {
                     }
 
                     ScrollBar.vertical: ScrollBar {
-                        policy: viewport.contentHeight > viewport.height && (viewport.moving || panelHover.containsMouse || content.cursorVisible)
+                        policy: viewport.contentHeight > viewport.height + 0.5 && (viewport.moving || panelHover.hovered || content.cursorVisible)
                             ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
                         width: 3
                     }
                 }
 
-                HoverHandler { id: panelHover }
+                HoverHandler {
+                    id: panelHover
+                    property bool enteredPanel: false
+                    onHoveredChanged: {
+                        if (hovered)
+                            enteredPanel = true;
+                        else if (enteredPanel) {
+                            enteredPanel = false;
+                            content.clearCursor();
+                        }
+                    }
+                }
             }
         }
     }

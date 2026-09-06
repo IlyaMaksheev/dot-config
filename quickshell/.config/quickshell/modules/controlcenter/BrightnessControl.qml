@@ -9,6 +9,7 @@ Item {
     property bool effectiveVisible: Backlight.available
     property int preferredHeight: Appearance.controlCenterSliderHeight
     property var moduleControls: effectiveVisible ? [slider] : []
+    readonly property var entryControl: slider
     property var adoptPointer: function(control) {}
 
     onPanelVisibleChanged: Backlight.setPanelVisible(panelVisible)

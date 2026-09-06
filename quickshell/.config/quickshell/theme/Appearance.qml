@@ -26,6 +26,7 @@ Singleton {
     readonly property int controlCenterRadius: 2
     readonly property int controlCenterBorderWidth: 3
     readonly property int controlCenterFocusWidth: 2
+    readonly property int controlCenterFocusClearance: 3
     readonly property int feedbackDuration: 120
     readonly property int structuralDuration: 150
     // Qt exposes no dependable cross-desktop preference here yet. Feature behavior is
@@ -39,7 +40,11 @@ Singleton {
     readonly property color surfaceBackground: dark1
     readonly property color surfaceHover: dark2
     readonly property color surfacePressed: dark0
-    readonly property color surfaceSelected: dark_green_soft
+    readonly property color surfaceSelected: dark2
+    readonly property color surfaceFocused: dark2
+    readonly property color surfaceSelectedFocused: dark3
+    readonly property color surfaceRaised: dark2
+    readonly property color surfaceRaisedHover: dark3
     readonly property color focusColor: bright_green
     readonly property color separatorColor: dark3
     readonly property color textPrimary: light1
